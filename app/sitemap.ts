@@ -1,18 +1,24 @@
-import type { MetadataRoute } from 'next';
-import { source } from '@/lib/source';
-import { siteUrl } from '@/lib/shared';
+import type { MetadataRoute } from "next";
+import { siteUrl } from "@/lib/shared";
+import { source } from "@/lib/source";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const pages = source.getPages();
+  const buildDate = new Date();
+  const latestPageDate = pages.reduce<Date | undefined>((latest, page) => {
+    const modified = page.data.lastModified ?? buildDate;
+    if (!modified || (latest && modified <= latest)) return latest;
+    return modified;
+  }, undefined);
+
   return [
     {
       url: siteUrl,
-      changeFrequency: 'weekly',
-      priority: 1,
+      lastModified: latestPageDate,
     },
-    ...source.getPages().map((page) => ({
+    ...pages.map((page) => ({
       url: new URL(page.url, siteUrl).toString(),
-      changeFrequency: 'weekly' as const,
-      priority: page.url === '/docs' ? 0.9 : 0.7,
+      lastModified: page.data.lastModified ?? buildDate,
     })),
   ];
 }

@@ -1,48 +1,234 @@
-import Link from 'next/link';
-import { ArrowUpRight, BookOpen, GitBranch, Languages, MessageCircle, Route } from 'lucide-react';
+import {
+  ArrowUpRight,
+  BookOpen,
+  Bot,
+  GitBranch,
+  Languages,
+  MessageCircle,
+  Route,
+  ShieldCheck,
+  TerminalSquare,
+} from "lucide-react";
+import Link from "next/link";
+import { StructuredData } from "@/components/structured-data";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+import { repositoryUrl } from "@/lib/shared";
 
 export default function HomePage() {
   return (
-    <main className="home-shell">
-      <section className="hero">
-        <div className="eyebrow"><span className="signal" /> НЕЗАВИСИМАЯ БАЗА ЗНАНИЙ · RU</div>
-        <div className="hero-grid">
+    <>
+      <StructuredData data={[organizationJsonLd, websiteJsonLd]} />
+      <header className="home-header">
+        <Link className="home-brand" href="/" aria-label="Orca Guide — главная">
+          ORCA GUIDE
+        </Link>
+        <nav aria-label="Основная навигация">
+          <Link href="/docs">Документация</Link>
+          <Link href="/docs/community/about">О проекте</Link>
+          <a href={repositoryUrl}>GitHub</a>
+        </nav>
+      </header>
+
+      <main className="home-shell">
+        <section className="hero">
+          <div className="eyebrow">НЕЗАВИСИМАЯ БАЗА ЗНАНИЙ · RU</div>
+          <div className="hero-grid">
+            <div>
+              <p className="kicker">ORCA GUIDE / СООБЩЕСТВО</p>
+              <h1>
+                Среда для тех,
+                <br />
+                <em>кто работает</em>
+                <br />
+                вместе с агентами.
+              </h1>
+              <p className="hero-copy">
+                Русскоязычная рабочая база по Orca ADE: установка, AI-агенты,
+                git worktree, CLI, проверка кода, понятные переводы официальных
+                материалов и заметки из практики.
+              </p>
+              <div className="hero-actions">
+                <Link className="primary-link" href="/docs">
+                  <BookOpen size={18} aria-hidden="true" />
+                  Открыть базу
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </Link>
+                <Link className="quiet-link" href="/docs/chto-takoe-orca">
+                  Разобраться за минуту
+                </Link>
+              </div>
+            </div>
+            <aside className="mission-card">
+              <span className="card-index">01 / ЗАЧЕМ ЭТО</span>
+              <p>
+                Неофициальное пространство для тех, кто хочет управлять
+                несколькими агентами и понимать каждое изменение в коде.
+              </p>
+              <div className="card-rule" />
+              <span>
+                Мы указываем первоисточник, дату обновления и ответственного
+                редактора для каждого материала.
+              </span>
+            </aside>
+          </div>
+        </section>
+
+        <section className="answer-section" aria-labelledby="what-is-orca">
+          <p className="kicker">КОРОТКИЙ ОТВЕТ</p>
+          <h2 id="what-is-orca">Что такое Orca ADE?</h2>
+          <p>
+            Orca — настольная среда разработки для параллельной работы с
+            консольными AI-агентами. Для каждой задачи она создаёт отдельный git
+            worktree, открывает терминал агента, браузер и просмотр изменений.
+            Благодаря изоляции Claude Code, Codex, Cursor CLI и другие агенты
+            могут одновременно решать одну или разные задачи, не перезаписывая
+            файлы друг друга. Разработчик сравнивает результаты, комментирует
+            строки diff, запускает проверки и отправляет выбранную ветку в pull
+            request. Orca не является моделью и не заменяет Git: она организует
+            уже используемые инструменты в едином рабочем пространстве. Эта база
+            объясняет установку, модель worktree, работу агентов, CLI, удалённые
+            среды и безопасную проверку созданного ИИ кода на русском языке.
+          </p>
+          <Link href="/docs/chto-takoe-orca">
+            Подробное объяснение и ограничения Orca
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+        </section>
+
+        <section className="routes-section">
+          <div className="section-label">
+            <Route size={16} aria-hidden="true" /> НАЧАТЬ ОТСЮДА
+          </div>
+          <div className="route-grid">
+            <Link href="/docs/chto-takoe-orca" className="route-card">
+              <span>01</span>
+              <h2>Что такое Orca?</h2>
+              <p>Возможности ADE, worktree, агенты и границы продукта.</p>
+              <ArrowUpRight aria-hidden="true" />
+            </Link>
+            <Link href="/docs/reference/install" className="route-card">
+              <span>02</span>
+              <h2>Установка</h2>
+              <p>macOS, Windows, Linux, каналы обновлений и первый запуск.</p>
+              <ArrowUpRight aria-hidden="true" />
+            </Link>
+            <Link href="/docs/reference/first-session" className="route-card">
+              <span>03</span>
+              <h2>Первая сессия</h2>
+              <p>Три агента, три worktree, сравнение результатов — пошагово.</p>
+              <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
+
+        <section className="audience-section" aria-labelledby="choose-route">
           <div>
-            <p className="kicker">ORCA GUIDE / СООБЩЕСТВО</p>
-            <h1>Среда для тех,<br /><em>кто работает</em><br />вместе с агентами.</h1>
-            <p className="hero-copy">Русскоязычная рабочая база по Orca ADE: исходные материалы, понятные переводы, рецепты и заметки из реальной практики.</p>
-            <div className="hero-actions">
-              <Link className="primary-link" href="/docs"><BookOpen size={18} />Открыть базу <ArrowUpRight size={17} /></Link>
+            <p className="kicker">ВЫБЕРИТЕ СЦЕНАРИЙ</p>
+            <h2 id="choose-route">Маршрут зависит от вашей задачи.</h2>
+          </div>
+          <div className="audience-grid">
+            <article>
+              <Bot aria-hidden="true" />
+              <h3>Работа с агентами</h3>
+              <p>
+                Подключите Claude Code, Codex или Cursor CLI, следите за
+                состоянием сессий и сравнивайте решения в изолированных ветках.
+              </p>
+              <Link href="/docs/agents/supported">Выбрать агента</Link>
+            </article>
+            <article>
+              <GitBranch aria-hidden="true" />
+              <h3>Worktree и ревью</h3>
+              <p>
+                Разделяйте задачи, проверяйте diff построчно, оставляйте агенту
+                комментарии и отправляйте только проверенный результат.
+              </p>
+              <Link href="/docs/model/worktrees">Понять модель Orca</Link>
+            </article>
+            <article>
+              <TerminalSquare aria-hidden="true" />
+              <h3>CLI и автоматизация</h3>
+              <p>
+                Управляйте worktree, браузером и несколькими агентами из
+                терминала, навыков и повторяемых автоматизаций.
+              </p>
+              <Link href="/docs/cli/overview">Открыть руководство CLI</Link>
+            </article>
+          </div>
+        </section>
+
+        <section className="principles">
+          <div>
+            <p className="kicker">КАК УСТРОЕНА БАЗА</p>
+            <h2>
+              Перевод с проверяемым
+              <br />
+              происхождением.
+            </h2>
+          </div>
+          <div className="principle-list">
+            <p>
+              <Languages size={20} aria-hidden="true" />
+              <b>Источник рядом</b>
+              <span>
+                У импортированной статьи есть ссылка на официальную версию,
+                чтобы проверить формулировку и актуальное поведение.
+              </span>
+            </p>
+            <p>
+              <ShieldCheck size={20} aria-hidden="true" />
+              <b>Ответственность</b>
+              <span>
+                На странице видны редактор и дата обновления. Политика проекта
+                объясняет, как исправляются ошибки и отделяется опыт сообщества.
+              </span>
+            </p>
+            <p>
+              <MessageCircle size={20} aria-hidden="true" />
+              <b>Практический контекст</b>
+              <span>
+                Локальные заметки дополняют перевод проверенными примерами, но
+                не выдаются за официальную позицию команды Orca.
+              </span>
+            </p>
+          </div>
+        </section>
+
+        <section
+          className="trust-section"
+          aria-labelledby="independent-project"
+        >
+          <div>
+            <p className="kicker">ПРОЗРАЧНОСТЬ</p>
+            <h2 id="independent-project">Независимый проект сообщества.</h2>
+          </div>
+          <div>
+            <p>
+              Orca Guide не связан с разработчиками Orca и не заменяет
+              официальную документацию. Названия продуктов и исходные материалы
+              принадлежат их владельцам. Репозиторий базы открыт: исправление
+              можно предложить через GitHub, а спорную информацию — сверить по
+              ссылке на источник.
+            </p>
+            <div className="trust-links">
+              <Link href="/docs/community/about">О проекте и контакты</Link>
+              <Link href="/docs/community/editorial-policy">
+                Редакционная политика
+              </Link>
+              <Link href="/docs/community/how-to-contribute">
+                Предложить исправление
+              </Link>
             </div>
           </div>
-          <aside className="mission-card">
-            <span className="card-index">01 / ЗАЧЕМ ЭТО</span>
-            <p>Неофициальное, локальное пространство для чтения и перевода документации Orca.</p>
-            <div className="card-rule" />
-            <span>Исходные материалы сохраняются отдельно от перевода и остаются доступными для постепенной локализации.</span>
-          </aside>
-        </div>
-      </section>
+        </section>
 
-      <section className="routes-section">
-        <div className="section-label"><Route size={16} /> НАЧАТЬ ОТСЮДА</div>
-        <div className="route-grid">
-          <Link href="/docs/chto-takoe-orca" className="route-card"><span>01</span><h2>Что такое Orca?</h2><p>Быстрая ориентация в ADE, ворктри и параллельных агентах.</p><ArrowUpRight /></Link>
-          <Link href="/docs/reference/install" className="route-card"><span>02</span><h2>Установка</h2><p>macOS, Windows, Linux, каналы обновлений и первый запуск.</p><ArrowUpRight /></Link>
-          <Link href="/docs/reference/first-session" className="route-card"><span>03</span><h2>Первая сессия</h2><p>Три агента, три ворктри, один результат — пошагово.</p><ArrowUpRight /></Link>
-        </div>
-      </section>
-
-      <section className="principles">
-        <div><p className="kicker">КАК УСТРОЕНА БАЗА</p><h2>Перевод — это<br />постепенный процесс.</h2></div>
-        <div className="principle-list">
-          <p><Languages size={20} /><b>Исходник рядом</b><span>Сначала сохраняем оригинал, затем переводим по частям и не теряем контекст.</span></p>
-          <p><BookOpen size={20} /><b>Документация как код</b><span>Статьи лежат в <code>content/docs</code> как MDX-файлы: редактируйте локально в привычном редакторе.</span></p>
-          <p><MessageCircle size={20} /><b>Место для опыта</b><span>Раздел «Сообщество» предназначен для заметок, рецептов и уточнений от русскоязычных пользователей.</span></p>
-        </div>
-      </section>
-
-      <footer className="home-footer"><span>ORCA GUIDE / LOCAL FIRST</span><a href="https://github.com/stablyai/orca" target="_blank" rel="noreferrer"><GitBranch size={15} /> Проект Orca</a></footer>
-    </main>
+        <footer className="home-footer">
+          <span>ORCA GUIDE / LOCAL FIRST</span>
+          <a href="https://github.com/stablyai/orca">
+            <GitBranch size={15} aria-hidden="true" /> Официальный проект Orca
+          </a>
+        </footer>
+      </main>
+    </>
   );
 }

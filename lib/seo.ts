@@ -1,4 +1,3 @@
-import { source } from './source';
 import {
   appName,
   editorialName,
@@ -7,13 +6,14 @@ import {
   repositoryUrl,
   siteDescription,
   siteUrl,
-} from './shared';
+} from "./shared";
+import { source } from "./source";
 
-type Page = (typeof source)['$inferPage'];
+type Page = (typeof source)["$inferPage"];
 
 export const organizationJsonLd = {
-  '@type': 'Organization',
-  '@id': `${siteUrl}/#organization`,
+  "@type": "Organization",
+  "@id": `${siteUrl}/#organization`,
   name: appName,
   url: siteUrl,
   description: siteDescription,
@@ -22,14 +22,14 @@ export const organizationJsonLd = {
 };
 
 export const websiteJsonLd = {
-  '@type': 'WebSite',
-  '@id': `${siteUrl}/#website`,
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
   url: siteUrl,
   name: appName,
   description: siteDescription,
-  inLanguage: 'ru-RU',
+  inLanguage: "ru-RU",
   publisher: {
-    '@id': `${siteUrl}/#organization`,
+    "@id": `${siteUrl}/#organization`,
   },
 };
 
@@ -37,18 +37,20 @@ export function getOfficialSourceUrl(page: Page) {
   const [section, ...rest] = page.slugs;
 
   if (!section) return null;
-  if (section === 'chto-takoe-orca') return 'https://www.onorca.dev/docs';
-  if (section === 'community') return null;
-  if (section === 'reference') {
-    return `https://www.onorca.dev/docs/${rest.join('/')}`;
+  if (section === "chto-takoe-orca") return "https://www.onorca.dev/docs";
+  if (section === "community") return null;
+  if (section === "reference") {
+    return `https://www.onorca.dev/docs/${rest.join("/")}`;
   }
 
-  return `https://www.onorca.dev/docs/${[section, ...rest].join('/')}`;
+  return `https://www.onorca.dev/docs/${[section, ...rest].join("/")}`;
 }
 
 export function getRelatedPages(page: Page, limit = 3) {
   const pages = source.getPages();
-  const currentIndex = pages.findIndex((candidate) => candidate.url === page.url);
+  const currentIndex = pages.findIndex(
+    (candidate) => candidate.url === page.url,
+  );
   const section = page.slugs[0];
   const sameSection = pages.filter(
     (candidate) => candidate.url !== page.url && candidate.slugs[0] === section,
@@ -71,20 +73,20 @@ export function getBreadcrumbJsonLd(page: Page) {
   const pages = source.getPages();
   const items = [
     {
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: 1,
-      name: 'Главная',
+      name: "Главная",
       item: siteUrl,
     },
     {
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: 2,
-      name: 'Документация',
+      name: "Документация",
       item: `${siteUrl}/docs`,
     },
   ];
 
-  if (page.url !== '/docs') {
+  if (page.url !== "/docs") {
     const section = page.slugs[0];
     const sectionPage = pages.find(
       (candidate) =>
@@ -95,7 +97,7 @@ export function getBreadcrumbJsonLd(page: Page) {
 
     if (page.slugs.length > 1 && sectionPage) {
       items.push({
-        '@type': 'ListItem',
+        "@type": "ListItem",
         position: items.length + 1,
         name: sectionPage.data.title,
         item: new URL(sectionPage.url, siteUrl).toString(),
@@ -103,7 +105,7 @@ export function getBreadcrumbJsonLd(page: Page) {
     }
 
     items.push({
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: items.length + 1,
       name: page.data.title,
       item: new URL(page.url, siteUrl).toString(),
@@ -111,7 +113,7 @@ export function getBreadcrumbJsonLd(page: Page) {
   }
 
   return {
-    '@type': 'BreadcrumbList',
+    "@type": "BreadcrumbList",
     itemListElement: items,
   };
 }
@@ -119,26 +121,29 @@ export function getBreadcrumbJsonLd(page: Page) {
 export function getArticleJsonLd(page: Page) {
   const url = new URL(page.url, siteUrl).toString();
   const sourceUrl = getOfficialSourceUrl(page);
-  const dateModified = page.data.lastModified?.toISOString();
+  const dateModified = (page.data.lastModified ?? new Date()).toISOString();
 
   return {
-    '@type': page.url === '/docs' ? 'WebPage' : 'TechArticle',
-    '@id': `${url}#article`,
+    "@type": page.url === "/docs" ? "WebPage" : "TechArticle",
+    "@id": `${url}#article`,
     headline: page.data.title,
     description: page.data.description,
     url,
     mainEntityOfPage: url,
-    inLanguage: 'ru-RU',
-    ...(dateModified ? { dateModified } : {}),
+    inLanguage: "ru-RU",
+    dateModified,
     ...(sourceUrl ? { isBasedOn: sourceUrl } : {}),
     author: {
-      '@type': 'Organization',
+      "@type": "Organization",
       name: editorialName,
       url: editorialUrl,
     },
     publisher: {
-      '@id': `${siteUrl}/#organization`,
+      "@id": `${siteUrl}/#organization`,
     },
-    image: new URL(`/og/docs/${[...page.slugs, 'image.png'].join('/')}`, siteUrl).toString(),
+    image: new URL(
+      `/og/docs/${[...page.slugs, "image.png"].join("/")}`,
+      siteUrl,
+    ).toString(),
   };
 }

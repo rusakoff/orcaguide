@@ -1,14 +1,14 @@
-import { RootProvider } from 'fumadocs-ui/provider/next';
-import type { Metadata } from 'next';
-import Script from 'next/script';
+import { RootProvider } from "fumadocs-ui/provider/next";
+import type { Metadata } from "next";
+import Script from "next/script";
 import {
   appName,
   editorialName,
   editorialUrl,
   siteDescription,
   siteUrl,
-} from '@/lib/shared';
-import './global.css';
+} from "@/lib/shared";
+import "./global.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -18,39 +18,39 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   authors: [{ name: editorialName, url: editorialUrl }],
   creator: editorialName,
   publisher: appName,
-  category: 'software documentation',
+  category: "software documentation",
   openGraph: {
-    type: 'website',
-    locale: 'ru_RU',
+    type: "website",
+    locale: "ru_RU",
     siteName: appName,
-    url: '/',
+    url: "/",
     title: appName,
     description: siteDescription,
     images: [
       {
-        url: '/opengraph-image',
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: 'Orca Guide — русскоязычная база знаний по Orca ADE',
+        alt: "Orca Guide — русскоязычная база знаний по Orca ADE",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: appName,
     description: siteDescription,
-    images: ['/opengraph-image'],
+    images: ["/opengraph-image"],
   },
 };
 
-export default function Layout({ children }: LayoutProps<'/'>) {
+export default function Layout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ru" className="dark" style={{ colorScheme: 'dark' }}>
+    <html lang="ru" className="dark" style={{ colorScheme: "dark" }}>
       <head>
         <Script id="yandex-metrika" strategy="lazyOnload">
           {`
@@ -82,7 +82,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
             {/* biome-ignore lint/performance/noImgElement: the tracking pixel must load directly from Yandex */}
             <img
               src="https://mc.yandex.ru/watch/111020992"
-              style={{ position: 'absolute', left: '-9999px' }}
+              style={{ position: "absolute", left: "-9999px" }}
               alt=""
             />
           </div>

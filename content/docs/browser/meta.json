@@ -1,8 +1,4 @@
 {
   "title": "Браузер и режим дизайна",
-  "pages": [
-    "design-mode",
-    "overview",
-    "profiles"
-  ]
+  "pages": ["design-mode", "overview", "profiles"]
 }
