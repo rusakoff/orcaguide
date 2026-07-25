@@ -718,18 +718,16 @@ html > body[data-scroll-locked] {
 
 .faq-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
 }
 
 .faq-list article {
-  padding: 20px;
-  border: 1px solid var(--fd-border);
-  background: color-mix(in srgb, var(--fd-card) 70%, transparent);
+  padding: 22px 0;
+  border-top: 1px solid var(--fd-border);
 }
 
-.faq-list article:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
+.faq-list article:last-child {
+  padding-bottom: 0;
 }
 
 .faq-list h3 {
@@ -811,13 +809,8 @@ html > body[data-scroll-locked] {
   }
 
   .audience-grid,
-  .faq-list,
   .related-pages ul {
     grid-template-columns: 1fr;
-  }
-
-  .faq-list article:last-child:nth-child(odd) {
-    grid-column: auto;
   }
 
   .audience-grid p {
