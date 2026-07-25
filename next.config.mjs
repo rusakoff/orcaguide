@@ -1,11 +1,15 @@
 import { createMDX } from "fumadocs-mdx/next";
 
 const withMDX = createMDX();
+const siteBuildTime = process.env.SITE_BUILD_TIME ?? new Date().toISOString();
 
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
   poweredByHeader: false,
+  env: {
+    SITE_BUILD_TIME: siteBuildTime,
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 604800,
