@@ -13,14 +13,13 @@ export default function HomePage() {
             <p className="hero-copy">Русскоязычная рабочая база по Orca ADE: исходные материалы, понятные переводы, рецепты и заметки из реальной практики.</p>
             <div className="hero-actions">
               <Link className="primary-link" href="/docs"><BookOpen size={18} />Открыть базу <ArrowUpRight size={17} /></Link>
-              <a className="quiet-link" href="https://www.onorca.dev/docs" target="_blank" rel="noreferrer">Оригинальные docs <ArrowUpRight size={16} /></a>
             </div>
           </div>
           <aside className="mission-card">
             <span className="card-index">01 / ЗАЧЕМ ЭТО</span>
             <p>Неофициальное, локальное пространство для чтения и перевода документации Orca.</p>
             <div className="card-rule" />
-            <span>Каждая исходная статья ведёт к первоисточнику и сохраняется отдельно от перевода.</span>
+            <span>Исходные материалы сохраняются отдельно от перевода и остаются доступными для постепенной локализации.</span>
           </aside>
         </div>
       </section>

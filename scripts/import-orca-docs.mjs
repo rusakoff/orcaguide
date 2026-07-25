@@ -112,7 +112,7 @@ async function importPage(url) {
   const { section, file, sectionName } = destination(url);
   const sectionPath = section ? path.join(output, section) : output;
   await mkdir(sectionPath, { recursive: true });
-  const frontmatter = `---\ntitle: "${escapeYaml(title)}"\ndescription: "${escapeYaml(description)}"\nsource: "${url}"\n---\n\n`;
+  const frontmatter = `---\ntitle: "${escapeYaml(title)}"\ndescription: "${escapeYaml(description)}"\n---\n\n`;
   await writeFile(
     path.join(sectionPath, `${file}.mdx`),
     `${frontmatter}${markdown}\n`,
