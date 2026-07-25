@@ -221,9 +221,13 @@ export default function HomePage() {
 
         <footer className="home-footer">
           <span>ORCA GUIDE / LOCAL FIRST</span>
-          <a href="https://github.com/stablyai/orca">
-            <GitBranch size={15} aria-hidden="true" /> Официальный проект Orca
-          </a>
+          <nav aria-label="Правовая информация">
+            <Link href="/privacy">Политика конфиденциальности</Link>
+            <Link href="/terms">Условия использования</Link>
+            <a href="https://github.com/stablyai/orca">
+              <GitBranch size={15} aria-hidden="true" /> Официальный проект Orca
+            </a>
+          </nav>
         </footer>
       </main>
     </>
