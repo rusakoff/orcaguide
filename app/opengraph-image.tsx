@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { appName, siteDescription } from "@/lib/shared";
 
-export const alt = "Orca Guide — русскоязычная база знаний по Orca ADE";
+export const alt = "Orca Guide, документация Orca ADE на русском языке";
 export const size = {
   width: 1200,
   height: 630,

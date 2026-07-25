@@ -1,7 +1,7 @@
 export const appName = "Orca Guide";
 export const siteUrl = "https://orcaguide.ru";
 export const siteDescription =
-  "Независимая русскоязычная база знаний по Orca ADE: установка, AI-агенты, git worktree, CLI, проверка кода и практические сценарии.";
+  "Документация Orca ADE на русском языке: установка, ИИ-агенты, git worktree, CLI и проверка кода.";
 export const docsRoute = "/docs";
 export const docsImageRoute = "/og/docs";
 export const docsContentRoute = "/llms.mdx/docs";

@@ -19,7 +19,7 @@ export default function HomePage() {
     <>
       <StructuredData data={[organizationJsonLd, websiteJsonLd]} />
       <header className="home-header">
-        <Link className="home-brand" href="/" aria-label="Orca Guide — главная">
+        <Link className="home-brand" href="/" aria-label="Главная Orca Guide">
           ORCA GUIDE
         </Link>
         <nav aria-label="Основная навигация">
@@ -43,9 +43,9 @@ export default function HomePage() {
                 вместе с агентами.
               </h1>
               <p className="hero-copy">
-                Русскоязычная рабочая база по Orca ADE: установка, AI-агенты,
-                git worktree, CLI, проверка кода, понятные переводы официальных
-                материалов и заметки из практики.
+                Документация Orca ADE на русском языке. В ней есть установка,
+                работа с ИИ-агентами и git worktree, справочник CLI и разбор
+                проверки кода.
               </p>
               <div className="hero-actions">
                 <Link className="primary-link" href="/docs">
@@ -61,8 +61,8 @@ export default function HomePage() {
             <aside className="mission-card">
               <span className="card-index">01 / ЗАЧЕМ ЭТО</span>
               <p>
-                Неофициальное пространство для тех, кто хочет управлять
-                несколькими агентами и понимать каждое изменение в коде.
+                Неофициальная документация для разработчиков, которые запускают
+                несколько агентов и проверяют их изменения перед коммитом.
               </p>
               <div className="card-rule" />
               <span>
@@ -77,17 +77,15 @@ export default function HomePage() {
           <p className="kicker">КОРОТКИЙ ОТВЕТ</p>
           <h2 id="what-is-orca">Что такое Orca ADE?</h2>
           <p>
-            Orca — настольная среда разработки для параллельной работы с
+            Orca представляет собой настольную среду разработки для параллельной работы с
             консольными AI-агентами. Для каждой задачи она создаёт отдельный git
             worktree, открывает терминал агента, браузер и просмотр изменений.
-            Благодаря изоляции Claude Code, Codex, Cursor CLI и другие агенты
-            могут одновременно решать одну или разные задачи, не перезаписывая
-            файлы друг друга. Разработчик сравнивает результаты, комментирует
-            строки diff, запускает проверки и отправляет выбранную ветку в pull
-            request. Orca не является моделью и не заменяет Git: она организует
-            уже используемые инструменты в едином рабочем пространстве. Эта база
-            объясняет установку, модель worktree, работу агентов, CLI, удалённые
-            среды и безопасную проверку созданного ИИ кода на русском языке.
+            Изолированные worktree не дают Claude Code, Codex, Cursor CLI и
+            другим агентам перезаписывать файлы друг друга. Разработчик
+            сравнивает результаты, комментирует строки diff, запускает проверки
+            и отправляет выбранную ветку в pull request. Orca не является
+            моделью и не заменяет Git. Она собирает уже используемые инструменты
+            в одном приложении.
           </p>
           <Link href="/docs/chto-takoe-orca">
             Подробное объяснение и ограничения Orca
@@ -115,7 +113,7 @@ export default function HomePage() {
             <Link href="/docs/reference/first-session" className="route-card">
               <span>03</span>
               <h2>Первая сессия</h2>
-              <p>Три агента, три worktree, сравнение результатов — пошагово.</p>
+              <p>Как запустить трёх агентов и сравнить их результаты.</p>
               <ArrowUpRight aria-hidden="true" />
             </Link>
           </div>
@@ -124,7 +122,7 @@ export default function HomePage() {
         <section className="audience-section" aria-labelledby="choose-route">
           <div>
             <p className="kicker">ВЫБЕРИТЕ СЦЕНАРИЙ</p>
-            <h2 id="choose-route">Маршрут зависит от вашей задачи.</h2>
+            <h2 id="choose-route">С чего начать</h2>
           </div>
           <div className="audience-grid">
             <article>
@@ -161,9 +159,9 @@ export default function HomePage() {
           <div>
             <p className="kicker">КАК УСТРОЕНА БАЗА</p>
             <h2>
-              Перевод с проверяемым
+              Как мы работаем
               <br />
-              происхождением.
+              с переводами
             </h2>
           </div>
           <div className="principle-list">
@@ -200,14 +198,14 @@ export default function HomePage() {
         >
           <div>
             <p className="kicker">ПРОЗРАЧНОСТЬ</p>
-            <h2 id="independent-project">Независимый проект сообщества.</h2>
+            <h2 id="independent-project">Кто выпускает Orca Guide</h2>
           </div>
           <div>
             <p>
               Orca Guide не связан с разработчиками Orca и не заменяет
               официальную документацию. Названия продуктов и исходные материалы
               принадлежат их владельцам. Репозиторий базы открыт: исправление
-              можно предложить через GitHub, а спорную информацию — сверить по
+              можно предложить через GitHub, а спорную информацию сверить по
               ссылке на источник.
             </p>
             <div className="trust-links">

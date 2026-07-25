@@ -69,7 +69,7 @@ Cursor CLI использует учётную запись и настройк�
 Что дальше
 ----------
 
-Для координации нескольких исполнителей используйте [оркестрацию](/docs/cli/orchestration), а для быстрого перехода к worktree с блокировкой — рецепт [«Переключение между десятью worktree»](/docs/recipes/jump-worktrees).`,
+Для координации нескольких исполнителей используйте [оркестрацию](/docs/cli/orchestration). Быстрый переход к worktree с блокировкой разобран в рецепте [«Переключение между десятью worktree»](/docs/recipes/jump-worktrees).`,
   ],
   [
     "review/attribution",
@@ -90,7 +90,7 @@ Cursor CLI использует учётную запись и настройк�
 
 Перед отправкой ветки выполните проверки проекта и просмотрите итоговый diff без фильтров. Убедитесь, что комментарии закрыты не формально, а соответствующим изменением кода. Если агент расширил область задачи, вынесите лишнее в отдельный worktree или верните его на доработку.
 
-Следующий шаг — [создать коммит и отправить ветку](/docs/review/commit-push). Для оценки происхождения строк используйте [индикаторы авторства](/docs/review/attribution).`,
+После проверки [создайте коммит и отправьте ветку](/docs/review/commit-push). Происхождение строк показывают [индикаторы авторства](/docs/review/attribution).`,
   ],
   [
     "recipes/jump-worktrees",
@@ -118,10 +118,27 @@ turndown.addRule("images", {
 });
 
 function clean(text) {
-  return text
+  const normalized = text
     .replace(/\n{3,}/g, "\n\n")
     .replace(/\[Copy\]\([^)]*\)/g, "")
     .trim();
+  const lines = normalized.split("\n");
+
+  return lines
+    .filter((line, index) => {
+      if (!line.trim()) return true;
+
+      for (let previous = index - 1; previous >= 0; previous -= 1) {
+        const candidate = lines[previous].trim();
+        if (!candidate) continue;
+        const image = candidate.match(/^!\[(.*)\]\([^)]+\)$/);
+        return !image || image[1] !== line.trim();
+      }
+
+      return true;
+    })
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n");
 }
 
 function escapeYaml(value) {
@@ -164,7 +181,7 @@ async function importPage(url) {
     $("title")
       .first()
       .text()
-      .replace(/ — Orca Docs$/, "")
+      .replace(/ (?:—|–|-|·) Orca Docs$/, "")
       .trim();
   const description =
     article.find("h1").first().nextAll("p").first().text().trim() || title;

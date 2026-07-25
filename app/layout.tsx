@@ -36,7 +36,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Orca Guide — русскоязычная база знаний по Orca ADE",
+        alt: "Orca Guide, документация Orca ADE на русском языке",
       },
     ],
   },
