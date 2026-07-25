@@ -1,56 +1,56 @@
 ---
-title: "Agents & sessions"
-description: "State dots, restart chips, and the lifecycle of an agent session."
+title: "Агенты и сессии"
+description: "Индикаторы состояния, перезапуск и жизненный цикл сессии агента."
 source: "https://www.onorca.dev/docs/model/agents-sessions"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Agents & sessions](https://www.onorca.dev/docs/model/agents-sessions).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Agents & sessions](https://www.onorca.dev/docs/model/agents-sessions).
 
-State dots, restart chips, and the lifecycle of an agent session.
+В Orca можно следить за индикаторами состояния, перезапускать агентов и управлять жизненным циклом их сессий.
 
-An **agent session** is one CLI agent running in one terminal in one worktree. Orca tracks its lifecycle so you always know which sessions are working and which are idle — without you having to click into each tab to check.
+**Сессия агента** означает один CLI-агент, запущенный в одном терминале одного worktree. Orca отслеживает его состояние, поэтому видно, какие сессии работают, а какие ожидают, без перехода на каждую вкладку.
 
-![Inline agent status on every worktree card — yellow while working, green when done](https://www.onorca.dev/whats-new/posters/agent-statuses.jpg)
+![Состояние агента на каждой карточке worktree: жёлтый индикатор во время работы и зелёный после завершения](https://www.onorca.dev/whats-new/posters/agent-statuses.jpg)
 
-Inline agent status on every worktree card — yellow while working, green when done
+Состояние агента на каждой карточке worktree: жёлтый индикатор во время работы и зелёный после завершения
 
-State dots
-----------
+Индикаторы состояния
+---------------------
 
-Every tab shows a small dot indicating the agent's state:
+На каждой вкладке отображается небольшая точка:
 
-*   **Green pulsing** — the agent is actively working (TUI in a non-idle state).
-*   **Yellow** — the agent is waiting on input from you.
-*   **Gray** — the agent is idle.
-*   **No dot** — the terminal is plain shell, not a recognized agent CLI.
+* **Пульсирующая зелёная**: агент активно работает, а его терминальный интерфейс не находится в состоянии ожидания.
+* **Жёлтая**: агент ожидает вашего ввода.
+* **Серая**: агент бездействует.
+* **Без точки**: в терминале открыта обычная оболочка, а не распознанный CLI-агент.
 
-State is detected from the terminal's OSC title sequence, which Claude Code, Codex, and several other agents emit.
+Состояние определяется по последовательностям заголовка OSC, которые отправляют Claude Code, Codex и некоторые другие агенты.
 
-Agent dashboard
----------------
+Панель агентов
+--------------
 
-Each worktree card in the sidebar inlines its agent sessions with the same colored status dot — so you can see every agent on every worktree at a glance, without expanding cards. Rows stay bold until you've viewed them, and a sidebar status overlay surfaces the worktrees that need attention first.
+На каждой карточке worktree в боковой панели показаны сессии агентов с теми же цветными индикаторами. Можно сразу увидеть состояние всех агентов, не раскрывая карточки. Непросмотренные строки остаются полужирными, а дополнительный индикатор выводит наверх worktree, требующие внимания.
 
-The dashboard is on by default; there is no toggle. If you don't see status dots, the agent CLI in that session isn't emitting OSC titles Orca recognizes — start it through the agent combobox rather than typing the binary by hand.
+Панель включена по умолчанию и не имеет отдельного переключателя. Если точек нет, CLI в этой сессии не отправляет известные Orca заголовки OSC. Запускайте его через список агентов, а не вводите имя исполняемого файла вручную.
 
-Launch defaults
----------------
-
-Orca launches every supported agent with its full-autonomy permission flag pre-applied — Claude with `--dangerously-skip-permissions`, Codex with `--dangerously-bypass-approvals-and-sandbox`, Gemini with `--yolo`, and the equivalent for each other agent in the picker. The intent is that the worktree itself is the sandbox: agents can do their thing without per-tool approval prompts breaking the flow.
-
-If you want different defaults for an agent, open **Settings → Agents**, expand the agent's row, and edit its **launch arguments** — Orca remembers the override and applies it on every subsequent launch. A **Reset** button next to the field puts the shipped flag back if you want to revert.
-
-Restart chip
-------------
-
-When an agent exits (clean or crash), the tab shows a **Restart** chip. One click rehydrates the same agent with the same working directory. Codex's restart chip also preserves the current account (see [Hot-swap Codex accounts](/docs/agents/codex-hot-swap)).
-
-Session lifecycle
+Параметры запуска
 -----------------
 
-1.  **Launch** — pick an agent from the combobox; Orca spawns the CLI.
-2.  **Work** — OSC titles update state; terminal output scrolls with search, copy, and Ghostty theming.
-3.  **Idle** — Orca detects the working→idle transition and fires an [agent-finished notification](/docs/notifications).
-4.  **Exit** — the process ends; the Restart chip appears.
+Orca заранее добавляет каждому поддерживаемому агенту параметр автономной работы: `--dangerously-skip-permissions` для Claude, `--dangerously-bypass-approvals-and-sandbox` для Codex, `--yolo` для Gemini и аналогичные параметры для остальных агентов. Сам worktree выполняет роль песочницы, поэтому запросы разрешения для каждого инструмента не прерывают работу.
 
-For the exact detection rules, see the `terminal wait --for tui-idle` command in the [Orca CLI](/docs/cli/overview).
+Чтобы изменить параметры агента, откройте **Настройки → Агенты**, раскройте его строку и отредактируйте **Аргументы запуска**. Orca запомнит значение для следующих запусков. Кнопка **Сбросить** возвращает исходный параметр.
+
+Кнопка перезапуска
+------------------
+
+После штатного или аварийного завершения агента на вкладке появляется кнопка **Перезапустить**. Она запускает того же агента в прежнем рабочем каталоге. Для Codex сохраняется и текущий аккаунт. Подробнее: [Быстрая смена аккаунтов Codex](/docs/agents/codex-hot-swap).
+
+Жизненный цикл сессии
+---------------------
+
+1. **Запуск**: выберите агента в списке, и Orca запустит CLI.
+2. **Работа**: заголовки OSC обновляют состояние, а терминал показывает вывод с поиском, копированием и оформлением Ghostty.
+3. **Ожидание**: Orca замечает переход из работы в ожидание и отправляет [уведомление о завершении агента](/docs/reference/notifications).
+4. **Выход**: процесс завершается, после чего появляется кнопка перезапуска.
+
+Точные правила определения состояния описаны для команды `terminal wait --for tui-idle` в разделе [Orca CLI](/docs/cli/overview).

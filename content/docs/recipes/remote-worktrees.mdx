@@ -1,29 +1,29 @@
 ---
-title: "Work on a remote machine over SSH"
-description: "Work on a remote machine over SSH"
+title: "Работа на удалённом компьютере по SSH"
+description: "Подключение удалённого репозитория или папки и запуск агентов на другом компьютере."
 source: "https://www.onorca.dev/docs/recipes/remote-worktrees"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Work on a remote machine over SSH](https://www.onorca.dev/docs/recipes/remote-worktrees).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Work on a remote machine over SSH](https://www.onorca.dev/docs/recipes/remote-worktrees).
 
-Point Orca at any SSH target — a beefier dev box, a GPU host, a cloud sandbox — and it feels like a local worktree. Same editor, same diff view, same agents, different compute. You can open remote repos _or_ just arbitrary folders. For the full menu of local / SSH / server / ephemeral-VM modes, see [Ways to run Orca](/docs/ways-to-run).
+Подключите Orca к любому узлу SSH: мощной машине для разработки, серверу с GPU или облачной песочнице. Удалённый worktree будет выглядеть как локальный, с тем же редактором, просмотром diff и агентами, но вычисления выполнятся на другом компьютере. Можно открыть удалённый репозиторий или произвольную папку. Все варианты локального запуска, SSH, сервера и временных виртуальных машин описаны в статье [Способы запуска Orca](/docs/reference/ways-to-run).
 
-Setup
------
+Настройка
+---------
 
-1.  Add the host under [Settings → SSH](/docs/settings).
-2.  Test the connection. Make sure git is installed on the host if you're working with a repo.
-3.  Add the repo to Orca, selecting the SSH target as its location — or open any remote folder directly from the file picker.
+1. Добавьте узел в разделе [Настройки → SSH](/docs/reference/settings).
+2. Проверьте подключение. Для работы с репозиторием на удалённом компьютере должен быть установлен Git.
+3. Добавьте репозиторий в Orca и выберите узел SSH как его расположение либо откройте любую удалённую папку через диалог выбора файлов.
 
-Run
----
+Работа
+------
 
-1.  Create a worktree. Orca runs `git worktree add` on the remote.
-2.  Launch an agent — it runs on the remote host, not your laptop.
-3.  Edit files inline — Orca streams saves to the remote filesystem.
-4.  Review the diff, commit, and push from your laptop as usual.
+1. Создайте worktree. Orca выполнит `git worktree add` на удалённом компьютере.
+2. Запустите агента. Он будет работать на удалённом узле, а не на ноутбуке.
+3. Редактируйте файлы во встроенном редакторе. Orca передаёт сохранения в удалённую файловую систему.
+4. Как обычно, проверьте diff, создайте коммит и отправьте изменения со своего ноутбука.
 
-Disconnects
------------
+Разрывы соединения
+------------------
 
-Laptop sleeps, Wi-Fi drops — the agent keeps running remotely. Orca reconnects and re-attaches the terminal. Nothing lost.
+Если ноутбук уснул или пропал Wi-Fi, агент продолжает работать на удалённом компьютере. Orca восстановит соединение и снова подключится к терминалу без потери данных.

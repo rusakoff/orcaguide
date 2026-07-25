@@ -1,51 +1,49 @@
 ---
-title: "Tabs, panes & split layouts"
-description: "Drag-to-split panes, tab groups, and pinned boundaries."
+title: "Вкладки, панели и разделение экрана"
+description: "Разделение панелей перетаскиванием, группы вкладок и сохранение границ."
 source: "https://www.onorca.dev/docs/model/tabs-panes-splits"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Tabs, panes & split layouts](https://www.onorca.dev/docs/model/tabs-panes-splits).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Tabs, panes & split layouts](https://www.onorca.dev/docs/model/tabs-panes-splits).
 
-Drag-to-split panes, tab groups, and pinned boundaries.
+Система панелей Orca позволяет наблюдать за несколькими агентами и не терять контекст. Вкладки объединяются в панели, а панели образуют разделённую компоновку.
 
-Orca's pane system is designed for watching multiple agents work without losing context. Tabs group into panes; panes split into layouts.
+![Перетащите вкладку к краю панели, чтобы расположить рядом терминалы, diff и браузер](https://www.onorca.dev/whats-new/posters/tab-split.jpg)
 
-![Drag a tab to a pane edge to split — terminals, diffs, and browser tabs side by side](https://www.onorca.dev/whats-new/posters/tab-split.jpg)
+Перетащите вкладку к краю панели, чтобы расположить рядом терминалы, diff и браузер
 
-Drag a tab to a pane edge to split — terminals, diffs, and browser tabs side by side
+Вкладки
+-------
 
-Tabs
-----
+На вкладке находится один объект: терминал, редактор, браузер, diff или pull request. Вкладки собраны в **группы**.
 
-Each tab holds one thing: a terminal, an editor buffer, a browser, a diff, a PR. Tabs live inside a **tab group**.
+* Перетаскивайте вкладки вверх и вниз внутри группы, чтобы изменить порядок.
+* Перетащите вкладку в другую группу, чтобы переместить её.
+* Закройте все вкладки файлов в активном worktree сочетанием `Cmd+Option+W` в macOS или `Ctrl+Alt+W` в Windows и Linux.
+* Цветная полоса активной вкладки показывает панель в фокусе.
 
-*   Drag a tab up-down within a group to reorder.
-*   Drag a tab onto another group to move it.
-*   Close every editor file tab in the active worktree with `Cmd+Option+W` on macOS or `Ctrl+Alt+W` on Windows / Linux.
-*   An active-tab color bar marks which pane is focused.
+Разделение панелей
+------------------
 
-Split panes
------------
+Перетащите вкладку к краю панели:
 
-Drag a tab to the edge of a pane to create a split:
+* **Правый край** разделяет область слева направо.
+* **Нижний край** разделяет область сверху вниз.
 
-*   **Right edge** — splits left/right (horizontal split).
-*   **Bottom edge** — splits top/bottom (vertical split).
+Разделения могут быть вложенными. Например, слева можно оставить терминал агента, справа сверху открыть diff, а справа снизу браузер.
 
-Splits nest. You can have an agent terminal on the left, a diff view on the top-right, and a browser tab on the bottom-right — all at once.
+![Любые типы вкладок можно располагать рядом: терминал агента, diff, браузер, редактор и pull request](https://www.onorca.dev/whats-new/split-anything.webp)
 
-![Any tab type can split with any other — agent terminal, diff, browser, editor, PR view all coexist in one pane tree.](https://www.onorca.dev/whats-new/split-anything.webp)
+Любые типы вкладок можно располагать рядом: терминал агента, diff, браузер, редактор и pull request
 
-Any tab type can split with any other — agent terminal, diff, browser, editor, PR view all coexist in one pane tree.
+Сам терминал тоже можно разделить внутри вкладки. В меню выберите **Разделить терминал справа** или **Разделить терминал снизу** либо нажмите кнопку разделения в заголовке активной панели терминала.
 
-Terminal tabs can also split inside the tab. Use the terminal tab menu for **Split terminal right** or **Split terminal down**, or use the split button in the active terminal pane header for a right split.
-
-Pinned boundaries
+Сохранение границ
 -----------------
 
-Pane boundaries stay where you put them. Resizing the window doesn't shuffle your layout; boundary positions are saved per worktree.
+Границы панелей остаются на заданных местах. Изменение размера окна не перестраивает компоновку, а положение разделителей сохраняется отдельно для каждого worktree.
 
-Tab groups across worktrees
----------------------------
+Группы вкладок в разных worktree
+--------------------------------
 
-Each worktree owns its own tab layout. Switching worktrees swaps the entire pane tree — your browser tab, terminal, and diff reappear exactly as you left them.
+У каждого worktree собственная компоновка вкладок. При переключении заменяется всё дерево панелей, а браузер, терминал и diff возвращаются в оставленное состояние.

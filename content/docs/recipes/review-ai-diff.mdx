@@ -1,20 +1,20 @@
 ---
-title: "Review an AI diff line-by-line"
-description: "Review an AI diff line-by-line"
+title: "Построчная проверка изменений ИИ"
+description: "Проверка diff, отправка комментариев агенту и повторная оценка исправлений."
 source: "https://www.onorca.dev/docs/recipes/review-ai-diff"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Review an AI diff line-by-line](https://www.onorca.dev/docs/recipes/review-ai-diff).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Review an AI diff line-by-line](https://www.onorca.dev/docs/recipes/review-ai-diff).
 
-Reviewing an AI diff well is the difference between shipping fast and shipping bugs. Here's the loop.
+Тщательная проверка diff отделяет быструю поставку изменений от быстрой поставки ошибок. Используйте следующий рабочий цикл.
 
-Steps
------
+Порядок действий
+----------------
 
-1.  Open the worktree's diff view.
-2.  Go file-by-file with `j` / `k`. For each hunk, ask: is the change necessary? is it minimal? does it match the rest of the file?
-3.  Drop comments with `c` on anything you want changed — full sentences work best.
-4.  When you've been through the whole diff, click **Send to agent**. Orca batches all comments into one prompt.
-5.  Watch the agent revise. The state dot will go yellow (waiting for more input) or green (working).
-6.  When it's idle, re-open the diff. Your comments are pinned; resolve the ones that are fixed and leave follow-ups on the rest.
-7.  Repeat until clean, then commit.
+1. Откройте просмотр diff текущего worktree.
+2. Переходите между файлами клавишами `j` и `k`. Для каждого фрагмента проверьте, нужно ли это изменение, минимально ли оно и соответствует ли остальному файлу.
+3. Нажмите `c` и оставьте комментарии ко всему, что следует исправить. Лучше писать полными предложениями.
+4. После проверки всего diff нажмите **Отправить агенту**. Orca объединит комментарии в один запрос.
+5. Следите за исправлениями. Индикатор агента станет жёлтым при ожидании ввода или зелёным во время работы.
+6. Когда агент перейдёт в состояние ожидания, снова откройте diff. Комментарии останутся привязанными к строкам. Закройте исправленные замечания и добавьте уточнения к остальным.
+7. Повторяйте проверку до готовности изменений, затем создайте коммит.

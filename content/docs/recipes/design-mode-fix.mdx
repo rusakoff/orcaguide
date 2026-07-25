@@ -1,25 +1,25 @@
 ---
-title: "Fix a UI bug with Design Mode"
-description: "Fix a UI bug with Design Mode"
+title: "Исправление интерфейса в режиме дизайна"
+description: "Как выбрать проблемный элемент на странице и передать его агенту для исправления."
 source: "https://www.onorca.dev/docs/recipes/design-mode-fix"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Fix a UI bug with Design Mode](https://www.onorca.dev/docs/recipes/design-mode-fix).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Fix a UI bug with Design Mode](https://www.onorca.dev/docs/recipes/design-mode-fix).
 
-Design Mode collapses the "that button looks wrong" → "fixed commit" loop to under a minute.
+Режим дизайна позволяет пройти путь от замечания "эта кнопка выглядит неправильно" до готового коммита меньше чем за минуту.
 
-Steps
------
+Порядок действий
+----------------
 
-1.  Open the worktree's browser pane. Navigate to the page with the bug.
-2.  Toggle [Design Mode](/docs/browser/design-mode) on.
-3.  Click the broken element. It lands in the agent chat as a rich attachment.
-4.  Type what you want fixed: "this padding is too tight, increase to match the cards above."
-5.  The agent edits the source. Hot reload refreshes the browser.
-6.  Click the element again to verify — if still wrong, repeat.
-7.  When it's right, commit.
+1. Откройте браузер текущего worktree и перейдите на страницу с ошибкой.
+2. Включите [режим дизайна](/docs/browser/design-mode).
+3. Нажмите на проблемный элемент. Он появится в чате агента как вложение с подробным контекстом.
+4. Опишите требуемое исправление, например: "Здесь слишком маленький отступ. Сделай его таким же, как у карточек выше".
+5. Агент изменит исходный код, а горячая перезагрузка обновит страницу.
+6. Снова выберите элемент и проверьте результат. Если проблема осталась, повторите действия.
+7. Когда результат вас устроит, создайте коммит.
 
-Why it's fast
--------------
+Почему это быстро
+-----------------
 
-No screenshot, no DOM hunting, no selector copying. The agent gets the HTML, computed CSS, and a cropped image of the exact element you pointed at — the same context a human reviewer would want.
+Не нужно делать отдельный снимок экрана, искать элемент в DOM или копировать селектор. Агент получает HTML, вычисленные стили CSS и обрезанное изображение именно того элемента, который вы выбрали. Это тот же контекст, который понадобился бы человеку при проверке.

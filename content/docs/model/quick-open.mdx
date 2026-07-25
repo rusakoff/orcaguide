@@ -1,35 +1,33 @@
 ---
-title: "Quick Open & Jump Palette"
-description: "Cmd-J scoped jump across worktrees, recents, and tabs."
+title: "Быстрое открытие и палитра перехода"
+description: "Навигация по worktree, недавним элементам и вкладкам с помощью Cmd-P и Cmd-J."
 source: "https://www.onorca.dev/docs/model/quick-open"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Quick Open & Jump Palette](https://www.onorca.dev/docs/model/quick-open).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Quick Open & Jump Palette](https://www.onorca.dev/docs/model/quick-open).
 
-Cmd-J scoped jump across worktrees, recents, and tabs.
+Когда worktree становится много, навигация начинает замедлять работу. В Orca есть два инструмента, рассчитанных на управление с клавиатуры.
 
-Once you have more than a handful of worktrees, navigation becomes the bottleneck. Orca ships two keyboard-first navigation tools.
+Быстрое открытие (Cmd-P)
+-----------------------
 
-Quick Open (Cmd-P)
-------------------
+Эта команда ищет файлы в текущем worktree. Введите часть названия, и Orca отсортирует результаты по недавнему использованию и точности совпадения, затем откроет файл в новой вкладке. Игнорируемые Git файлы тоже попадают в результаты, но показываются после отслеживаемых. Часто открываемые сборочные результаты и файлы окружения остаются доступны, не занимая верхние строки.
 
-File search scoped to the current worktree. Type a fragment; Orca ranks by recency plus match score and opens the file in a new editor tab. Gitignored files are included in results — they're surfaced as a second pass after tracked matches, so the files you frequently quick-open (build outputs, env files) stay reachable without polluting the top of the list.
+Палитра перехода между worktree (Cmd-J)
+---------------------------------------
 
-Worktree Jump Palette (Cmd-J)
------------------------------
+Палитра ищет сразу по всем worktree и вкладкам. В пустом поле отображается подсказка _репозиторий/worktree_. Можно вводить любую часть, и Orca отфильтрует результаты. После начала ввода поиск включает неархивированные worktree, даже если текущие фильтры боковой панели их скрывают.
 
-Jump across every worktree and every tab in one search. The placeholder in the empty input reads _repo/worktree_ — type either half and Orca filters accordingly. Once you start typing, search includes non-archived worktrees even if they are hidden by the sidebar's current filters.
+В результатах отображаются:
 
-Results include:
+* **Недавние worktree**: верхний раздел при пустом запросе, отсортированный по времени последнего перехода и ограниченный удобным для просмотра числом строк.
+* Проекты и группы репозиториев, к которым можно перейти по названию.
+* Все worktree, сгруппированные по репозиторию после начала ввода.
+* Worktree, найденные по сохранённому названию или номеру pull request GitHub (`#123`) либо merge request GitLab (`!123`), если эти сведения уже доступны.
+* Все открытые вкладки, сначала в текущем worktree, затем во всех остальных.
 
-*   **Recent Worktrees** — the top section with an empty query, ordered by last focus, capped so the list stays scannable.
-*   Projects and repo groups, so you can jump to a sidebar section by name.
-*   Every worktree grouped by repo once you start typing.
-*   Worktrees matched by cached GitHub PR title or number (`#123`) and cached GitLab merge request title or number (`!123`) when that review metadata is already available.
-*   Every open tab, scoped first by current worktree, then globally.
+Сочетание `Shift-Enter` открывает worktree в новой панели вместо замены содержимого текущей.
 
-Shift-Enter on a worktree opens it in a new split instead of swapping the current pane.
+Если запрос не совпал с существующим worktree, палитра предложит строку **Создать worktree** и использует введённый текст как название. При наличии совпадений сначала выбирается существующий результат, поэтому `Enter` продолжит выполнять переход.
 
-When the query does not match an existing worktree, the palette offers a **Create worktree** row using the typed text as the name. Existing matches stay selected first, so pressing Enter still jumps when a real result is available.
-
-Shortcut bindings are remappable under [Settings → Shortcuts](/docs/settings).
+Сочетания клавиш можно изменить в разделе [Настройки → Сочетания клавиш](/docs/reference/settings).

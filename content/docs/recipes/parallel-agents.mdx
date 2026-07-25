@@ -1,25 +1,25 @@
 ---
-title: "Race three agents on the same task"
-description: "Race three agents on the same task"
+title: "Три агента решают одну задачу"
+description: "Параллельный запуск одной задачи в трёх ветках и выбор лучшего результата."
 source: "https://www.onorca.dev/docs/recipes/parallel-agents"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Race three agents on the same task](https://www.onorca.dev/docs/recipes/parallel-agents).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Race three agents on the same task](https://www.onorca.dev/docs/recipes/parallel-agents).
 
-Running the same task across multiple agents in parallel is Orca's killer move. Same prompt, three branches, pick the winner.
+Один из главных сценариев Orca состоит в параллельном запуске одной задачи несколькими агентами. Один запрос выполняется в трёх ветках, после чего вы выбираете лучший результат.
 
-Steps
------
+Порядок действий
+----------------
 
-1.  Create three worktrees from the same start-from ref. Name them `fix-bug`, `fix-bug-2`, `fix-bug-3`.
-2.  Launch a different agent in each — Claude Code, Codex, Cursor CLI.
-3.  Paste the same prompt into all three.
-4.  Split the panes so you can see them work — drag tabs to edges.
-5.  When they finish, review each diff. Use [Annotate AI Diff](/docs/review/annotate-ai-diff) on the winner.
-6.  Commit, push, open PR from the winning worktree.
-7.  Delete the two losers — one click removes the worktree and branch.
+1. Создайте три worktree от одной исходной ссылки. Назовите их `fix-bug`, `fix-bug-2` и `fix-bug-3`.
+2. Запустите в каждом своего агента: Claude Code, Codex и Cursor CLI.
+3. Отправьте всем трём одинаковый запрос.
+4. Разделите панели, перетащив вкладки к краям, чтобы наблюдать за работой.
+5. После завершения проверьте каждый diff. Для лучшего варианта используйте [комментарии к изменениям ИИ](/docs/review/annotate-ai-diff).
+6. Создайте коммит, отправьте ветку и откройте pull request из победившего worktree.
+7. Удалите два оставшихся варианта. Одно нажатие удалит worktree и ветку.
 
-Why it works
-------------
+Почему это работает
+-------------------
 
-Different agents make different mistakes. Running the same task in parallel is cheaper than sequential retries and surfaces disagreement as a signal. Where three agents agree, the answer is probably right. Where they split, you've found the hard part.
+Разные агенты допускают разные ошибки. Параллельное решение часто обходится дешевле последовательных повторных попыток, а расхождения между ответами указывают на сложную часть задачи. Совпадение результатов трёх агентов повышает уверенность в решении, а разногласие показывает, что требует особого внимания.
