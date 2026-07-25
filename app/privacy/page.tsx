@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CookieSettingsButton } from "@/components/analytics-consent";
 import { LegalPage } from "@/components/legal-page";
-import { issuesUrl, siteUrl } from "@/lib/shared";
+import { editorialEmail, issuesUrl, siteUrl } from "@/lib/shared";
 
 export const metadata: Metadata = {
   title: "Политика конфиденциальности",
@@ -30,11 +30,10 @@ export default function PrivacyPage() {
           независимый проект сообщества.
         </p>
         <p>
-          Связаться с редакцией можно через{" "}
-          <a href={issuesUrl}>GitHub Issues</a>. Не публикуйте там IP-адрес,
-          идентификаторы cookies и другие персональные данные. В обращении
-          достаточно попросить закрытый канал для передачи сведений, которые
-          нужны для проверки запроса.
+          Связаться с редакцией можно по адресу{" "}
+          <a href={`mailto:${editorialEmail}`}>{editorialEmail}</a> или через{" "}
+          <a href={issuesUrl}>GitHub Issues</a>. Не публикуйте в открытой задаче
+          IP-адрес, идентификаторы cookies и другие персональные данные.
         </p>
       </section>
 

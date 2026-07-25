@@ -1,8 +1,10 @@
 import {
   appName,
+  editorialEmail,
   editorialName,
   editorialPolicyUrl,
   editorialUrl,
+  logoUrl,
   repositoryUrl,
   siteDescription,
   siteUrl,
@@ -17,6 +19,21 @@ export const organizationJsonLd = {
   name: appName,
   url: siteUrl,
   description: siteDescription,
+  logo: {
+    "@type": "ImageObject",
+    url: logoUrl,
+    contentUrl: logoUrl,
+    width: 512,
+    height: 512,
+  },
+  email: editorialEmail,
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "editorial support",
+    email: editorialEmail,
+    url: editorialUrl,
+    availableLanguage: ["ru"],
+  },
   sameAs: [repositoryUrl],
   publishingPrinciples: editorialPolicyUrl,
 };

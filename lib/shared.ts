@@ -6,8 +6,10 @@ export const docsRoute = "/docs";
 export const docsImageRoute = "/og/docs";
 export const docsContentRoute = "/llms.mdx/docs";
 export const editorialName = "Редакция Orca Guide";
+export const editorialEmail = "mail@orcaguide.ru";
 export const editorialUrl = `${siteUrl}/docs/community/about`;
 export const editorialPolicyUrl = `${siteUrl}/docs/community/editorial-policy`;
+export const logoUrl = `${siteUrl}/logo.svg`;
 
 export const gitConfig = {
   user: "rusakoff",
