@@ -141,6 +141,29 @@ function clean(text) {
     .replace(/\n{3,}/g, "\n\n");
 }
 
+function humanizeImportedMarkdown(text, description) {
+  let result = text
+    .replace(/(\d)\s*[—–]\s*(\d)/g, "$1-$2")
+    .replace(/\s+[—–]\s+/g, ", ")
+    .replace(/[—–]/g, ", ")
+    .replace(/[“”]/g, '"')
+    .replace(
+      /(^|\n)Что дальше\n-+(?=\n)/g,
+      "$1Связанные статьи\n----------------",
+    );
+
+  const blocks = result.split(/\n{2,}/);
+  if (
+    blocks[0]?.trim().replace(/[.!?]+$/, "") ===
+    description.trim().replace(/[.!?]+$/, "")
+  ) {
+    blocks.shift();
+    result = blocks.join("\n\n");
+  }
+
+  return result.replace(/\n{3,}/g, "\n\n").trim();
+}
+
 function escapeYaml(value) {
   return String(value || "")
     .replace(/\\/g, "\\\\")
@@ -186,7 +209,10 @@ async function importPage(url) {
   const description =
     article.find("h1").first().nextAll("p").first().text().trim() || title;
   article.find("h1").first().remove();
-  const markdown = clean(turndown.turndown(article.html() || ""));
+  const markdown = humanizeImportedMarkdown(
+    clean(turndown.turndown(article.html() || "")),
+    description,
+  );
   const { section, file, sectionName } = destination(url);
   const enhancement = localEnhancements.get(
     [section, file].filter(Boolean).join("/"),
