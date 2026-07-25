@@ -1,4 +1,4 @@
-# ОРКА · База
+# Orca Guide
 
 Локальная независимая русскоязычная база знаний по Orca ADE. Сайт сделан на Next.js и [Fumadocs](https://www.fumadocs.dev/docs).
 

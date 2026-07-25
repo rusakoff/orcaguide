@@ -8,7 +8,7 @@ export default function HomePage() {
         <div className="eyebrow"><span className="signal" /> НЕЗАВИСИМАЯ БАЗА ЗНАНИЙ · RU</div>
         <div className="hero-grid">
           <div>
-            <p className="kicker">ОРКА / СООБЩЕСТВО</p>
+            <p className="kicker">ORCA GUIDE / СООБЩЕСТВО</p>
             <h1>Среда для тех,<br /><em>кто работает</em><br />вместе с агентами.</h1>
             <p className="hero-copy">Русскоязычная рабочая база по Orca ADE: исходные материалы, понятные переводы, рецепты и заметки из реальной практики.</p>
             <div className="hero-actions">
@@ -43,7 +43,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="home-footer"><span>ОРКА · БАЗА / LOCAL FIRST</span><a href="https://github.com/stablyai/orca" target="_blank" rel="noreferrer"><GitBranch size={15} /> Проект Orca</a></footer>
+      <footer className="home-footer"><span>ORCA GUIDE / LOCAL FIRST</span><a href="https://github.com/stablyai/orca" target="_blank" rel="noreferrer"><GitBranch size={15} /> Проект Orca</a></footer>
     </main>
   );
 }

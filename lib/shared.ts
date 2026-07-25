@@ -1,4 +1,4 @@
-export const appName = 'ОРКА · База';
+export const appName = 'Orca Guide';
 export const siteUrl = 'https://orcaguide.ru';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
