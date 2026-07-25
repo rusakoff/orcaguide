@@ -1,0 +1,120 @@
+---
+title: "Реестр навыков Orca и MCP"
+description: "Установка навыков orca-cli, orchestration, computer-use, orca-linear и orca-emulator."
+source: "https://www.onorca.dev/docs/cli/skills"
+---
+
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Orca skills registry & MCP](https://www.onorca.dev/docs/cli/skills).
+
+Навыки агентов Orca устанавливаются командой `npx skills add`. Среди них доступны `orca-cli`, `orchestration`, `computer-use`, `orca-linear` и `orca-emulator`.
+
+Команды Orca CLI распространяются как **навыки**, то есть версионируемые пакеты, которые агент устанавливает в собственный каталог навыков.
+
+Доступные навыки Orca
+---------------------
+
+Передайте команде `npx skills add` адрес публичного репозитория Orca и название навыка. В стандартной конфигурации используются `orca-cli`, `computer-use` и `orchestration`. Установите `orca-linear`, если агентам нужен контекст задач Linear, и `orca-emulator`, если они должны управлять локальным iOS Simulator из Orca.
+
+Навык
+
+Установка
+
+Назначение
+
+[`orca-cli`](#orca-cli)
+
+`npx skills add https://github.com/stablyai/orca --skill orca-cli`
+
+Управляемые Orca worktree, терминалы, файлы, автоматизации и встроенный браузер.
+
+[`orchestration`](#orchestration)
+
+`npx skills add https://github.com/stablyai/orca --skill orchestration`
+
+Структурированная координация нескольких агентов через сообщения, задачи, назначения и точки принятия решений.
+
+[`computer-use`](#computer-use)
+
+`npx skills add https://github.com/stablyai/orca --skill computer-use`
+
+Управление приложениями через деревья доступности, снимки экрана, нажатия, ввод текста и безопасные действия интерфейса.
+
+[`orca-linear`](#orca-linear)
+
+`npx skills add https://github.com/stablyai/orca --skill orca-linear`
+
+Контекст задач Linear для агентов, работающих из связанных задач.
+
+[`orca-emulator`](#orca-emulator)
+
+`npx skills add https://github.com/stablyai/orca --skill orca-emulator`
+
+Управление iOS Simulator из Orca: нажатия, жесты, ввод, разрешения, подмена камеры и специальные возможности.
+
+orca-cli
+--------
+
+```
+npx skills add https://github.com/stablyai/orca --skill orca-cli
+```
+
+После установки агент получает файл `SKILL.md` с описанием команд Orca CLI для worktree, терминала и браузера.
+
+Чтение руководств через Orca CLI
+--------------------------------
+
+Если Orca CLI доступен, встроенные команды позволяют прочитать текст навыка, соответствующий установленной версии Orca:
+
+```
+orca skills list
+orca skills get orca-cli
+orca skills get orchestration --full
+```
+
+Добавьте `--json`, если агенту нужен предсказуемый результат для автоматизации. Команда `skills show` работает как псевдоним `skills get`.
+
+orchestration
+-------------
+
+```
+npx skills add https://github.com/stablyai/orca --skill orchestration
+```
+
+Этот навык нужен агенту для координации других агентов через сообщения, задачи, назначения и отслеживание завершения в `orca orchestration`. Рабочий процесс описан в статье [Оркестрация](/docs/cli/orchestration).
+
+computer-use
+------------
+
+```
+npx skills add https://github.com/stablyai/orca --skill computer-use
+```
+
+Навык позволяет агенту просматривать окна локальных приложений и управлять ими через интерфейс Orca Computer Use. Подробнее: [Управление компьютером](/docs/cli/computer-use).
+
+orca-linear
+-----------
+
+```
+npx skills add https://github.com/stablyai/orca --skill orca-linear
+```
+
+Навык предоставляет агенту контекст задач Linear из Orca. Ранее установленные навыки `linear-tickets` продолжат работать. Orca направляет операции обновления в установленный навык Linear.
+
+orca-emulator
+-------------
+
+```
+npx skills add https://github.com/stablyai/orca --skill orca-emulator
+```
+
+Навык позволяет агенту управлять iOS Simulator внутри Orca через команды `orca emulator`.
+
+Добавление собственных навыков
+------------------------------
+
+Командой `npx skills add` можно установить любой репозиторий с файлом `skills/<название>/SKILL.md`. Укажите агенту внутренний репозиторий, чтобы предоставить инструменты вашей организации.
+
+Серверы MCP
+-----------
+
+Серверы Model Context Protocol (MCP) предоставляют внешние инструменты совместимым агентам. Зарегистрируйте адреса MCP в разделе [Настройки → Интеграции → MCP](/docs/reference/settings). Инструменты появятся в тех CLI-агентах, которые поддерживают MCP.

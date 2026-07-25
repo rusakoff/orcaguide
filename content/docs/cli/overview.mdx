@@ -1,0 +1,120 @@
+---
+title: "Обзор Orca CLI"
+description: "Управление worktree, терминалами, встроенным браузером и навыками агентов из командной строки."
+source: "https://www.onorca.dev/docs/cli/overview"
+---
+
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Orca CLI overview](https://www.onorca.dev/docs/cli/overview).
+
+Orca CLI позволяет управлять редактором Orca из любой командной оболочки. С его помощью можно создавать и проверять worktree, управлять терминалами агентов, открывать файлы и diff, автоматизировать встроенный браузер, запускать задачи по расписанию и обращаться к инструментам Orca из сценариев или ИИ-агентов.
+
+CLI устанавливается вместе с настольным приложением. Зарегистрируйте его в разделе [Настройки → Экспериментальные функции → CLI](/docs/reference/settings).
+
+Агенты могут установить соответствующий навык Orca CLI:
+
+```
+npx skills add https://github.com/stablyai/orca --skill orca-cli
+```
+
+Полный список доступных навыков приведён в разделе [Реестр навыков и MCP](/docs/cli/skills).
+
+![Orca CLI: управление worktree, терминалами и встроенным браузером из любой оболочки](https://www.onorca.dev/whats-new/posters/orca-cli-demo.jpg)
+
+Orca CLI: управление worktree, терминалами и встроенным браузером из любой оболочки
+
+Установка и проверка
+--------------------
+
+```
+command -v orca
+orca status --json
+```
+
+Команды worktree
+----------------
+
+```
+orca worktree ps --json
+orca worktree create --repo id:<repoId> --name my-task --issue 123 --json
+orca worktree current --json
+orca worktree set --worktree active --comment "reproduced bug" --json
+orca worktree rm --worktree id:<id> --force --json
+```
+
+Селекторы, параметры настройки, родительские и дочерние worktree и полная карта команд описаны в [справочнике Orca CLI](/docs/cli/reference).
+
+Команды терминала
+-----------------
+
+```
+orca terminal list --json
+orca terminal read --json
+orca terminal send --text "continue" --enter --json
+orca terminal wait --for tui-idle --timeout-ms 30000 --json
+orca terminal create --worktree path:/projects/app --command "npm test" --json
+orca terminal split --direction vertical --command "npm run dev" --json
+```
+
+Для отслеживаемой работы нескольких агентов используйте [оркестрацию](/docs/cli/orchestration), а не обычную отправку запросов в терминал.
+
+Команды для файлов
+------------------
+
+Из оболочки можно открывать файлы и diff активного worktree Orca:
+
+```
+orca file open src/App.tsx
+orca file diff src/App.tsx --staged
+orca file open-changed --mode both
+```
+
+Если текущий каталог оболочки находится вне нужного worktree, добавьте `--worktree <селектор>`.
+
+Профили браузера
+----------------
+
+Профили изолируют состояние сессии вкладок. Сценарий или агент может тестировать приложение с разными файлами cookie, локальным хранилищем и аккаунтами. Команды профилей находятся в группе `orca tab profile`. Начните с `orca tab profile list --json`, затем используйте `create`, `set`, `clone` или `use-default`.
+
+Автоматизации по расписанию
+---------------------------
+
+Группа `orca automations` создаёт, просматривает, запускает и удаляет задачи Orca по расписанию. Если нужно регулярно выполнять запрос для репозитория или существующего worktree, начните со статьи [Автоматизации по расписанию](/docs/cli/automations).
+
+Автоматизация браузера
+----------------------
+
+CLI управляет встроенным браузером по циклу "снимок, действие, новый снимок":
+
+```
+orca goto --url https://example.com --json
+orca snapshot --json     # returns refs like @e1, @e3
+orca click --element @e3 --json
+orca fill --element @e1 --value "user@example.com" --json
+orca screenshot --json
+```
+
+Для проверки адаптивности выберите профиль устройства для активной вкладки:
+
+```
+orca set device --name "iPhone 12" --json
+orca screenshot --json
+```
+
+Мобильный эмулятор
+------------------
+
+CLI может управлять iOS Simulator через мост мобильного эмулятора Orca. Он привязан к активному worktree. Агенты и сценарии могут подключить симулятор из списка `orca emulator list`, нажимать по нормализованным координатам, вводить текст, выполнять жесты, поворачивать и выключать устройство, не покидая Orca.
+
+```
+orca emulator list --json
+orca emulator attach "<device-name-or-udid>" --json
+orca emulator tap 0.5 0.7 --json
+orca emulator type "hello" --json
+orca emulator gesture '[{"type":"begin","x":0.5,"y":0.8},{"type":"move","x":0.5,"y":0.4},{"type":"end","x":0.5,"y":0.2}]' --json
+orca emulator rotate landscape_left --json
+orca emulator kill --json
+```
+
+Если сценарию нужна явная цель, передайте `--worktree <селектор>`, `--device <udid-или-имя>` или `--emulator <id>`.
+
+Полный список команд для вкладок, ожидания, файлов cookie и фреймов приведён в [справочнике Orca CLI](/docs/cli/reference). После этого установите навык Orca CLI из [реестра навыков](/docs/cli/skills) и подключите его к агенту.

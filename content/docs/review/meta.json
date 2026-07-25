@@ -1,0 +1,12 @@
+{
+  "title": "Ревью и отправка кода",
+  "pages": [
+    "annotate-ai-diff",
+    "attribution",
+    "commit-push",
+    "diff-viewer",
+    "github",
+    "jira",
+    "linear"
+  ]
+}

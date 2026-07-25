@@ -1,0 +1,16 @@
+{
+  "title": "Работа с агентами",
+  "pages": [
+    "claude-code",
+    "codex",
+    "codex-hot-swap",
+    "cursor-cli",
+    "custom-cli",
+    "glm-agent",
+    "hibernation",
+    "hooks-memory",
+    "session-history",
+    "supported",
+    "usage-tracking"
+  ]
+}

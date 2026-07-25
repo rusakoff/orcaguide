@@ -1,0 +1,264 @@
+---
+title: "Оркестрация"
+description: "Координация терминалов нескольких агентов через сообщения, задачи, назначения и точки принятия решений."
+source: "https://www.onorca.dev/docs/cli/orchestration"
+---
+
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Orchestration](https://www.onorca.dev/docs/cli/orchestration).
+
+Оркестрация координирует несколько терминалов агентов Orca через сообщения, задачи, назначения и точки принятия решений.
+
+Это встроенный в Orca структурированный уровень координации нескольких агентов. Он предоставляет общий почтовый ящик, записи задач, состояния назначений, сообщения о завершении работы и точки принятия решений. Координатор может распределить работу и точно узнать, что было выполнено.
+
+Используйте оркестрацию, когда состояние координации нужно отслеживать. Для разовой отправки текста в терминал подходит `orca terminal send`. Если у работы есть ответственный, зависимости или обязательный отчёт о завершении, используйте `orca orchestration`.
+
+Экспериментальная функция
+
+Перед использованием команд включите оркестрацию в разделе "Настройки → Экспериментальные функции". CLI обращается к запущенной среде Orca, поэтому сначала должна успешно выполняться команда `orca status --json`.
+
+Основные сущности
+-----------------
+
+* **Сообщение**: сохраняемая заметка между терминалами с типом `status`, `dispatch`, `worker_done`, `escalation`, `decision_gate` или `heartbeat`.
+* **Задача**: единица работы с описанием, зависимостями и состоянием `pending`, `ready`, `dispatched`, `completed`, `failed` или `blocked`.
+* **Назначение**: передача задачи определённому терминалу. Задачу можно повторить с новым контекстом назначения.
+* **Точка принятия решения**: вопрос координатора, который блокирует задачу до получения решения.
+
+Право завершить задачу определяется активным контекстом назначения. Сообщения `worker_done` и `heartbeat` должны содержать как `taskId`, так и `dispatchId`.
+
+Идентификаторы задач вида `task_...`, выведенные в терминале, работают как ссылки. По нажатию Orca запрашивает текущее назначение задачи и переводит фокус на терминал исполнителя, включая терминалы в удалённых средах и подключениях SSH.
+
+Поиск доступных исполнителей
+----------------------------
+
+```
+orca status --json
+orca worktree ps --json
+orca terminal list --json
+orca orchestration task-list --json
+orca orchestration inbox --limit 20 --json
+```
+
+Дескрипторы терминалов служат адресами для прямых сообщений. Поддерживаются и групповые адреса:
+
+```
+orca orchestration send --to @all --subject "Heads up" --body "Pausing dispatches for a review." --json
+orca orchestration send --to @idle --subject "Anyone free?" --json
+orca orchestration send --to @codex --subject "Codex agents only" --json
+orca orchestration send --to @cursor --subject "Cursor agents only" --json
+orca orchestration send --to @grok --subject "Grok agents only" --json
+orca orchestration send --to @droid --subject "Droid agents only" --json
+orca orchestration send --to @worktree:<worktreeId> --subject "Worktree update" --json
+```
+
+В PowerShell заключайте групповые адреса в кавычки, например `--to "@all"`.
+
+Отправка и чтение сообщений
+---------------------------
+
+```
+orca orchestration send \
+  --to <terminalHandle> \
+  --subject "Please review API shape" \
+  --body "Focus on backwards compatibility." \
+  --type status \
+  --json
+
+orca orchestration check --terminal <terminalHandle> --unread --json
+orca orchestration check --terminal <terminalHandle> --all --types worker_done,escalation --json
+orca orchestration reply --id <messageId> --body "Approved. Keep going." --json
+orca orchestration inbox --limit 50 --full --json
+```
+
+По умолчанию используется `check --unread`, а найденные сообщения отмечаются прочитанными. Команда `check --all` возвращает сообщения, не меняя их состояние.
+
+При долгом ожидании блокируйте выполнение до получения сообщений нужных типов:
+
+```
+orca orchestration check \
+  --wait \
+  --types worker_done,escalation,decision_gate \
+  --timeout-ms 900000 \
+  --json
+```
+
+Во время ожидания CLI каждые 15 секунд выводит в stderr короткую строку JSON, подтверждающую активность. В stdout появляется только итоговый результат команды.
+
+Ручное назначение задачи
+------------------------
+
+Создайте задачу:
+
+```
+orca orchestration task-create \
+  --task-title "Billing mobile audit" \
+  --display-name "Billing audit worker" \
+  --spec "Audit the billing settings page for mobile layout bugs. Report files changed and screenshots." \
+  --json
+```
+
+Параметр `--task-title` задаёт короткое название в списке задач Orca. Используйте `--display-name`, если строке назначенного исполнителя нужна подпись короче полного запроса.
+
+Создайте или выберите терминал исполнителя:
+
+```
+orca worktree create --name billing-mobile-audit --agent codex --json
+orca terminal list --worktree id:<newWorktreeId> --json
+orca terminal wait --terminal <workerHandle> --for tui-idle --timeout-ms 60000 --json
+```
+
+Назначьте задачу и передайте исполнителю вводные:
+
+```
+orca orchestration dispatch \
+  --task <taskId> \
+  --to <workerHandle> \
+  --inject \
+  --json
+```
+
+Дождитесь завершения, эскалации или запроса решения:
+
+```
+orca orchestration check \
+  --wait \
+  --types worker_done,escalation,decision_gate \
+  --timeout-ms 900000 \
+  --json
+```
+
+Истечение времени ожидания является контрольной точкой, а не ошибкой. Проверьте задачу и терминал. Если исполнитель продолжает работу, возобновите ожидание:
+
+```
+orca orchestration task-list --json
+orca terminal read --terminal <workerHandle> --json
+```
+
+Правила для исполнителя
+-----------------------
+
+Назначенный исполнитель получает вводные с правилами общения с координатором:
+
+* Отправить `worker_done` ровно один раз, даже при ошибке.
+* Добавить в `--body` краткий итог: что сделано, что обнаружено и что осталось.
+* Указать идентификаторы задачи и назначения, чтобы устаревшая повторная попытка не завершила неправильное назначение.
+* Во время длительной работы отправлять сообщения `heartbeat`.
+* Для блокирующих вопросов использовать `orca orchestration ask`, а не локальные запросы терминального интерфейса.
+
+В PowerShell и других оболочках удобнее использовать параметры структурированного результата:
+
+```
+orca orchestration send \
+  --to <coordinatorHandle> \
+  --type worker_done \
+  --subject "Completed mobile audit" \
+  --body "Checked the billing settings page at narrow widths. Fixed the footer overlap in src/app/settings/Billing.tsx. No follow-up remains." \
+  --task-id <taskId> \
+  --dispatch-id <dispatchId> \
+  --files-modified "src/app/settings/Billing.tsx" \
+  --report-path "artifacts/billing-mobile-audit.md" \
+  --json
+```
+
+Сообщение об активности:
+
+```
+orca orchestration send \
+  --to <coordinatorHandle> \
+  --type heartbeat \
+  --subject "alive" \
+  --task-id <taskId> \
+  --dispatch-id <dispatchId> \
+  --phase "implementing" \
+  --json
+```
+
+Блокирующий вопрос:
+
+```
+orca orchestration ask \
+  --to <coordinatorHandle> \
+  --question "Should I update the shared component or only this page?" \
+  --options "shared,page-only" \
+  --timeout-ms 600000 \
+  --json
+```
+
+С параметром `--json` команда `ask` выводит один объект JSON, поэтому исполнитель может передать его в `jq -r .answer`.
+
+Цикл координатора
+-----------------
+
+При большом числе подзадач Orca может самостоятельно выполнять цикл координатора:
+
+```
+orca orchestration run \
+  --spec "Split the checkout QA work across available agents, collect results, and summarize blockers." \
+  --max-concurrent 3 \
+  --worktree active \
+  --json
+```
+
+Проверка хода работы:
+
+```
+orca orchestration task-list --json
+orca orchestration task-list --ready --json
+orca orchestration gate-list --status pending --json
+```
+
+Остановка активного запуска:
+
+```
+orca orchestration run-stop --json
+```
+
+Точки принятия решений
+----------------------
+
+Для вопросов исполнителя координатору используйте `ask`. Явные точки нужны, когда координатор создал граф зависимостей задач и хочет заблокировать задачу до записи решения:
+
+```
+orca orchestration gate-create \
+  --task <taskId> \
+  --question "Merge the shared button change into the task branch?" \
+  --options '["yes","no"]' \
+  --json
+
+orca orchestration gate-resolve --id <gateId> --resolution "yes" --json
+```
+
+Восстановление
+--------------
+
+Предварительный просмотр контекста назначения:
+
+```
+orca orchestration dispatch-show --task <taskId> --json
+orca orchestration dispatch-show --task <taskId> --preamble --json
+```
+
+Ручное обновление задачи:
+
+```
+orca orchestration task-update --id <taskId> --status blocked --result '{"reason":"waiting on credentials"}' --json
+```
+
+Сбрасывайте состояние только при намеренном отказе от текущей оркестрации:
+
+```
+orca orchestration reset --tasks --json
+orca orchestration reset --messages --json
+orca orchestration reset --all --json
+```
+
+Команда `reset` влияет на общее состояние оркестрации среды выполнения. Не выполняйте её при активном координаторе, если очистка не является вашей целью.
+
+Выбор подходящей команды
+------------------------
+
+Используйте `orca terminal send`, чтобы отправить простой запрос агенту, за которым вы наблюдаете.
+
+Используйте `orca orchestration dispatch --inject`, когда исполнитель должен отправить `worker_done`, задавать вопросы через координатора и отслеживаться по идентификатору задачи.
+
+Используйте `orca orchestration run`, чтобы Orca управляла циклом координатора и распределяла готовые задачи между доступными терминалами исполнителей.

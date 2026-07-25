@@ -1,0 +1,16 @@
+{
+  "title": "ОРКА · База",
+  "pages": [
+    "index",
+    "chto-takoe-orca",
+    "agents",
+    "browser",
+    "cli",
+    "editing",
+    "model",
+    "recipes",
+    "reference",
+    "review",
+    "community"
+  ]
+}

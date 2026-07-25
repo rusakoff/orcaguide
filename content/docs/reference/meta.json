@@ -1,0 +1,18 @@
+{
+  "title": "Уведомления и Inbox",
+  "pages": [
+    "activity",
+    "first-session",
+    "github-errors",
+    "install",
+    "mobile",
+    "notifications",
+    "remote-servers",
+    "settings",
+    "ssh",
+    "telemetry",
+    "terminal",
+    "troubleshooting",
+    "ways-to-run"
+  ]
+}

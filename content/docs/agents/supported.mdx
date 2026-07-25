@@ -1,0 +1,226 @@
+---
+title: "Поддерживаемые агенты"
+description: "Встроенные агенты Orca и подключение собственного CLI-агента."
+source: "https://www.onorca.dev/docs/agents/supported"
+---
+
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Supported agents](https://www.onorca.dev/docs/agents/supported).
+
+На этой странице перечислены агенты, которые Orca поддерживает изначально, и описано подключение собственного агента.
+
+Orca работает с **любым CLI-агентом**, поскольку список агентов запускает обычный процесс в терминале. Перечисленные ниже агенты заранее настроены во встроенном списке и запускаются или устанавливаются одним нажатием. Для каждого указаны доступные интеграции: хуки, состояние, учёт использования и смена аккаунтов.
+
+Разрешения по умолчанию
+-----------------------
+
+При первом запуске Orca подставляет для каждого поддерживаемого CLI параметр обхода запросов разрешений: `--dangerously-skip-permissions` для Claude, `--dangerously-bypass-approvals-and-sandbox` для Codex, `--yolo` для Gemini, Cursor, Crush, Kimi, Rovo Dev, Hermes, GitHub Copilot и Command Code, а также аналогичный параметр для остальных агентов, если он предусмотрен. Это рассчитано на одноразовые worktree. Агент может свободно экспериментировать в отдельной рабочей копии, а перед слиянием вы можете перенести нужные изменения или полностью отклонить diff.
+
+В разделе **Настройки → Агенты → Разрешения агентов** можно переключить всех агентов без собственной конфигурации между режимами **Yolo** и **Ручной**. Если вы ранее изменили аргументы запуска или окружение отдельного агента, Orca не будет менять его настройки при глобальном переключении.
+
+Чтобы вернуть запросы разрешений только для одного агента, измените его стандартные аргументы или окружение в настройках. Непустое пользовательское значение считается явным переопределением, поэтому дальнейшие изменения общего режима разрешений не затронут этого агента.
+
+Агент
+
+Возможности
+
+Документация
+
+Claude Code
+
+Глубокая интеграция: использование, смена аккаунтов, хуки
+
+[Anthropic](https://docs.anthropic.com/claude/docs/claude-code)
+
+Claude Agent Teams
+
+По умолчанию отключён. Включается в разделе "Настройки → Агенты" и запускается командой `orca claude-teams` с отдельными панелями для участников команды
+
+[Anthropic](https://code.claude.com/docs/agent-teams)
+
+Codex
+
+Глубокая интеграция: использование и смена аккаунтов
+
+[OpenAI](https://github.com/openai/codex)
+
+Grok
+
+Автоматическая настройка
+
+[xAI](https://x.ai/cli)
+
+GitHub Copilot CLI
+
+Автоматическая настройка
+
+[GitHub](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli)
+
+OpenCode
+
+Автоматическая настройка, состояние
+
+[OpenCode](https://opencode.ai/docs/cli/)
+
+Pi
+
+Автоматическая настройка, хуки, состояние
+
+[Pi](https://pi.dev)
+
+OMP
+
+Автоматическая настройка, хуки, состояние
+
+[OMP](https://omp.sh)
+
+Gemini
+
+Автоматическая настройка
+
+[Google](https://github.com/google-gemini/gemini-cli)
+
+Antigravity
+
+Автоматическая настройка, хуки, состояние
+
+[Google](https://antigravity.google/docs/cli-overview)
+
+Ante
+
+Автоматическая настройка, состояние
+
+[Ante](https://github.com/AntigmaLabs/ante-preview)
+
+Aider
+
+Автоматическая настройка
+
+[Aider](https://aider.chat/docs/)
+
+Goose
+
+Автоматическая настройка
+
+[Block](https://block.github.io/goose/docs/quickstart/)
+
+Amp
+
+Автоматическая настройка
+
+[Amp](https://ampcode.com/manual#install)
+
+Kilocode
+
+Автоматическая настройка
+
+[Kilo](https://kilo.ai/docs/cli)
+
+Kiro
+
+Автоматическая настройка
+
+[Kiro](https://kiro.dev/docs/cli/)
+
+Charm Crush
+
+Автоматическая настройка
+
+[Charm](https://github.com/charmbracelet/crush)
+
+Auggie
+
+Автоматическая настройка
+
+[Augment](https://docs.augmentcode.com/cli/overview)
+
+Autohand
+
+Автоматическая настройка
+
+[Autohand](https://github.com/autohandai/code-cli)
+
+Cline
+
+Автоматическая настройка
+
+[Cline](https://docs.cline.bot/cline-cli/overview)
+
+Codebuff
+
+Автоматическая настройка
+
+[Codebuff](https://www.codebuff.com/docs/help/quick-start)
+
+Command Code
+
+Автоматическая настройка, состояние
+
+[Command Code](https://commandcode.ai/docs/quickstart)
+
+Continue
+
+Автоматическая настройка
+
+[Continue](https://docs.continue.dev/guides/cli)
+
+Cursor CLI
+
+Глубокая интеграция
+
+[Cursor](https://cursor.com/cli)
+
+Devin
+
+Автоматическая настройка
+
+[Devin](https://devin.ai/cli)
+
+Droid (Factory)
+
+Автоматическая настройка, хуки, состояние
+
+[Factory](https://docs.factory.ai/cli/getting-started/quickstart)
+
+Kimi
+
+Автоматическая настройка
+
+[Moonshot](https://www.kimi.com/code/docs/en/kimi-code-cli/getting-started.html)
+
+Mistral Vibe
+
+Автоматическая настройка
+
+[Mistral](https://github.com/mistralai/mistral-vibe)
+
+MiniMax
+
+Автоматическая настройка, учёт использования и лимитов
+
+[MiniMax](https://www.minimax.chat)
+
+Qwen Code
+
+Автоматическая настройка через установленный исполняемый файл `qwen`
+
+[Qwen](https://github.com/QwenLM/qwen-code)
+
+Rovo Dev
+
+Автоматическая настройка
+
+[Atlassian](https://support.atlassian.com/rovo/docs/install-and-run-rovo-dev-cli-on-your-device/)
+
+Hermes
+
+Автоматическая настройка
+
+[Nous](https://hermes-agent.nousresearch.com/docs/)
+
+OpenClaw
+
+Автоматическая настройка
+
+[OpenClaw](https://github.com/openclaw/openclaw)
+
+Если нужного агента нет в списке, воспользуйтесь инструкцией [Добавление собственного CLI-агента](/docs/agents/custom-cli).

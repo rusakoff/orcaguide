@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+:root {
+  --fd-background: #101110;
+  --fd-foreground: #f2f0e8;
+  --fd-muted: #a7a59d;
+  --fd-muted-foreground: #a7a59d;
+  --fd-primary: #d6ff35;
+  --fd-primary-foreground: #12140d;
+  --fd-border: #32342f;
+}
+
+body { background: #101110; color: #f2f0e8; font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+
+.home-shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 40px 0 22px; }
+.hero { border-top: 1px solid #4c4e47; padding-top: 14px; }
+.eyebrow, .kicker, .section-label, .card-index, .home-footer { letter-spacing: .1em; font-size: 11px; color: #b9bbb3; }
+.signal { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #d6ff35; margin-right: 8px; box-shadow: 0 0 12px #d6ff35; }
+.hero-grid { display: grid; grid-template-columns: 1.45fr .55fr; gap: 64px; align-items: end; padding: 88px 0 78px; }
+.kicker { color: #d6ff35; margin-bottom: 20px; }
+.hero h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(50px, 7.2vw, 104px); line-height: .91; letter-spacing: -.065em; font-weight: 400; margin: 0; }
+.hero h1 em { color: #d6ff35; font-weight: 400; }
+.hero-copy { max-width: 590px; color: #c5c5bd; font-size: 15px; line-height: 1.7; margin: 32px 0; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+.primary-link, .quiet-link { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; transition: transform .2s ease; }
+.primary-link { background: #d6ff35; color: #13150e; padding: 14px 16px; font-size: 13px; font-weight: 700; }
+.quiet-link { color: #f2f0e8; font-size: 12px; border-bottom: 1px solid #6a6c65; padding-bottom: 4px; }
+.primary-link:hover, .quiet-link:hover, .route-card:hover { transform: translateY(-3px); }
+.mission-card { border: 1px solid #41433e; padding: 22px; background: repeating-linear-gradient(135deg, rgba(214,255,53,.04) 0 1px, transparent 1px 9px); min-height: 266px; display: flex; flex-direction: column; justify-content: space-between; }
+.mission-card p { font-family: Georgia, 'Times New Roman', serif; font-size: 25px; line-height: 1.08; margin: 22px 0; }
+.mission-card span:last-child { color: #aeb0a8; font-size: 11px; line-height: 1.55; }
+.card-rule { height: 1px; background: #4b4e47; }
+.routes-section { padding: 24px 0 94px; }
+.section-label { display: flex; align-items: center; gap: 9px; padding-bottom: 17px; border-bottom: 1px solid #41433e; }
+.route-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+.route-card { min-height: 244px; padding: 22px; border-right: 1px solid #41433e; border-bottom: 1px solid #41433e; color: inherit; text-decoration: none; display: grid; grid-template-columns: 1fr auto; transition: transform .2s ease, background .2s ease; }
+.route-card:first-child { border-left: 1px solid #41433e; }.route-card:hover { background: #191b18; }.route-card span { color: #d6ff35; font-size: 12px; }.route-card h2 { grid-column: 1 / -1; font-family: Georgia, serif; font-size: 30px; font-weight: 400; letter-spacing: -.04em; margin: 38px 0 8px; }.route-card p { color: #aeb0a8; font-size: 12px; line-height: 1.6; margin: 0; }.route-card svg { align-self: end; }
+.principles { border-top: 1px solid #41433e; border-bottom: 1px solid #41433e; padding: 46px 0; display: grid; grid-template-columns: .8fr 1.2fr; gap: 54px; }.principles h2 { font-family: Georgia, serif; font-size: 46px; font-weight: 400; line-height: .98; letter-spacing: -.05em; margin: 17px 0 0; }.principle-list { display: grid; gap: 16px; }.principle-list p { display: grid; grid-template-columns: 32px 155px 1fr; gap: 12px; align-items: start; margin: 0; padding-bottom: 16px; border-bottom: 1px solid #32342f; font-size: 12px; line-height: 1.55; }.principle-list svg { color: #d6ff35; }.principle-list span { color: #adafa7; }.principle-list code { color: #d6ff35; }
+.home-footer { display: flex; justify-content: space-between; padding: 22px 0 0; }.home-footer a { color: #d6ff35; text-decoration: none; display: flex; gap: 7px; align-items: center; }
+@media (max-width: 760px) { .home-shell { width: min(100% - 28px, 1180px); }.hero-grid, .principles { grid-template-columns: 1fr; gap: 34px; }.hero-grid { padding: 56px 0; }.mission-card { min-height: 190px; }.route-grid { grid-template-columns: 1fr; }.route-card { border-left: 1px solid #41433e; min-height: 180px; }.principle-list p { grid-template-columns: 28px 1fr; }.principle-list span { grid-column: 2; }.home-footer { gap: 14px; flex-direction: column; } }
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}

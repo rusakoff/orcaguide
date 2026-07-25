@@ -1,0 +1,10 @@
+{
+  "title": "Модель Orca",
+  "pages": [
+    "agents-sessions",
+    "quick-open",
+    "session-restore",
+    "tabs-panes-splits",
+    "worktrees"
+  ]
+}
