@@ -59,3 +59,5 @@ https://orcaguide.ru/docs/review/diff-viewer
 https://orcaguide.ru/docs/review/github
 https://orcaguide.ru/docs/review/jira
 https://orcaguide.ru/docs/review/linear
+https://orcaguide.ru/privacy
+https://orcaguide.ru/terms

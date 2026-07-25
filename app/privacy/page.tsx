@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CookieSettingsButton } from "@/components/analytics-consent";
+import { FaqSection } from "@/components/faq-section";
 import { LegalPage } from "@/components/legal-page";
+import { getFaqs } from "@/lib/faqs";
 import { editorialEmail, issuesUrl, siteUrl } from "@/lib/shared";
 
 export const metadata: Metadata = {
@@ -14,6 +16,8 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
+  const faqItems = getFaqs("/privacy");
+
   return (
     <LegalPage
       eyebrow="ПРИВАТНОСТЬ / COOKIES"
@@ -150,6 +154,7 @@ export default function PrivacyPage() {
           <Link href="/terms">«Условия использования»</Link>.
         </p>
       </section>
+      <FaqSection path="/privacy" items={faqItems} />
     </LegalPage>
   );
 }

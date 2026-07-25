@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FaqSection } from "@/components/faq-section";
 import { LegalPage } from "@/components/legal-page";
+import { getFaqs } from "@/lib/faqs";
 import { issuesUrl, repositoryUrl } from "@/lib/shared";
 
 export const metadata: Metadata = {
@@ -13,6 +15,8 @@ export const metadata: Metadata = {
 };
 
 export default function TermsPage() {
+  const faqItems = getFaqs("/terms");
+
   return (
     <LegalPage
       eyebrow="УСЛОВИЯ / ORCA GUIDE"
@@ -120,6 +124,7 @@ export default function TermsPage() {
           <Link href="/privacy">политике конфиденциальности</Link>.
         </p>
       </section>
+      <FaqSection path="/terms" items={faqItems} />
     </LegalPage>
   );
 }

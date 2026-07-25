@@ -11,9 +11,7 @@ const { rewrite: rewriteSuffix } = rewritePath(
   `${docsContentRoute}{/*path}/content.md`,
 );
 
-const lastModified = new Date(
-  process.env.SITE_BUILD_TIME ?? 0,
-).toUTCString();
+const lastModified = new Date(process.env.SITE_BUILD_TIME ?? 0).toUTCString();
 
 function isPublicPageRequest(request: NextRequest) {
   if (request.method !== "GET" && request.method !== "HEAD") return false;

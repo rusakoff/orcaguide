@@ -11,8 +11,10 @@ import { CalendarDays, ExternalLink, UserRound } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FaqSection } from "@/components/faq-section";
 import { getMDXComponents } from "@/components/mdx";
 import { StructuredData } from "@/components/structured-data";
+import { getFaqs } from "@/lib/faqs";
 import {
   getArticleJsonLd,
   getBreadcrumbJsonLd,
@@ -32,6 +34,7 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const markdownUrl = getPageMarkdownUrl(page).url;
   const sourceUrl = getOfficialSourceUrl(page);
   const relatedPages = getRelatedPages(page);
+  const faqItems = getFaqs(page.url);
   const dateModified = page.data.lastModified ?? new Date();
 
   return (
@@ -98,6 +101,7 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
             a: createRelativeLink(source, page),
           })}
         />
+        <FaqSection path={page.url} items={faqItems} />
         <section
           className="related-pages"
           aria-labelledby="related-pages-title"

@@ -10,11 +10,15 @@ import {
   TerminalSquare,
 } from "lucide-react";
 import Link from "next/link";
+import { FaqSection } from "@/components/faq-section";
 import { StructuredData } from "@/components/structured-data";
+import { getFaqs } from "@/lib/faqs";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { repositoryUrl } from "@/lib/shared";
 
 export default function HomePage() {
+  const faqItems = getFaqs("/");
+
   return (
     <>
       <StructuredData data={[organizationJsonLd, websiteJsonLd]} />
@@ -190,6 +194,8 @@ export default function HomePage() {
             </p>
           </div>
         </section>
+
+        <FaqSection path="/" items={faqItems} />
 
         <section
           className="trust-section"
