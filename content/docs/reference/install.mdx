@@ -1,71 +1,57 @@
 ---
-title: "Install"
-description: "Download Orca for macOS, Windows, or Linux, and opt into RC builds."
+title: "Установка"
+description: "Загрузка Orca для macOS, Windows и Linux, обновления и RC-сборки."
 source: "https://www.onorca.dev/docs/install"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Install](https://www.onorca.dev/docs/install).
 
-Download Orca for macOS, Windows, or Linux, and opt into RC builds.
+Orca доступна для macOS, Windows и Linux.
 
-Download
+Загрузка
 --------
 
-Orca is a desktop app. Email yourself a link to open on macOS, Windows, or Linux:
+* **macOS:** [Apple Silicon](https://github.com/stablyai/orca/releases/latest/download/orca-macos-arm64.dmg) или [Intel](https://github.com/stablyai/orca/releases/latest/download/orca-macos-x64.dmg).
+* **Windows:** [установщик](https://github.com/stablyai/orca/releases/latest/download/orca-windows-setup.exe).
+* **Linux:** [AppImage](https://github.com/stablyai/orca/releases/latest/download/orca-linux.AppImage) или [.deb](https://github.com/stablyai/orca/releases).
+* Старые версии: [GitHub Releases](https://github.com/stablyai/orca/releases).
 
-*   **macOS:** [Apple Silicon](https://github.com/stablyai/orca/releases/latest/download/orca-macos-arm64.dmg) · [Intel](https://github.com/stablyai/orca/releases/latest/download/orca-macos-x64.dmg)
-    
-*   **Windows:** [installer](https://github.com/stablyai/orca/releases/latest/download/orca-windows-setup.exe)
-    
-*   **Linux:** [AppImage](https://github.com/stablyai/orca/releases/latest/download/orca-linux.AppImage) · [.deb](https://github.com/stablyai/orca/releases)
-    
-*   Older versions: [GitHub Releases](https://github.com/stablyai/orca/releases).
-    
+### Homebrew в macOS
 
-### Homebrew (macOS)
-
-Orca is also published as a Homebrew cask, auto-bumped on every stable release:
+Стабильные выпуски публикуются как cask Homebrew:
 
 ```
 brew install --cask stablyai/orca/orca
 ```
 
-`brew upgrade --cask orca` picks up new stable builds. The cask tracks the stable channel — for RC builds, use the GitHub Releases links above or the in-app **Check for Updates** flow described under [Updates](#updates).
+Команда `brew upgrade --cask orca` устанавливает новую стабильную сборку. Для RC используйте GitHub Releases или проверку обновлений внутри приложения.
 
-First launch
-------------
+Первый запуск
+-------------
 
-On first launch Orca will:
+Orca запросит доступ к домашнему каталогу для добавления репозиториев, предложит импортировать `~/.claude`, `~/.codex` и настройки Ghostty, затем откроет экран добавления первого репозитория.
 
-*   Ask for access to your home directory so it can add repos.
-*   Offer to import `~/.claude`, `~/.codex`, and Ghostty terminal settings if present.
-*   Drop you on an empty landing screen where you add your first repo.
+Обновления
+----------
 
-Updates
--------
+По умолчанию Orca автоматически обновляется по стабильному каналу. RC-сборки получают новые функции раньше и могут выходить ежедневно.
 
-Orca auto-updates by default, tracking the **stable** channel. Stable releases are vetted; **RC (release candidate)** builds ship new features first, often daily.
+Постоянного переключателя RC нет. Удерживайте `Shift` при нажатии **Проверить обновления** в разделе [Настройки → Общие → Обновления](/docs/reference/settings), чтобы разово включить предварительные версии, либо скачайте сборку из GitHub Releases.
 
-There is no in-app opt-in for the RC channel. To pull an RC build, either:
+Если обновление не подходит
 
-*   Hold Shift while clicking **Check for Updates** ([Settings → General → Updates](/docs/settings), or the app / Help menu). That single check will include prereleases.
-*   Or download any build directly from the [GitHub Releases page](https://github.com/stablyai/orca/releases).
+Старые версии доступны на странице выпусков. Возврат к ним не приводит к принудительному откату данных worktree.
 
-Don't like the current update
-
-Older versions are always available on the [GitHub Releases page](https://github.com/stablyai/orca/releases). Orca will not force-downgrade your worktree data if you go back.
-
-Platform notes
---------------
+Особенности платформ
+--------------------
 
 ### macOS
 
-Signed and notarized. On first launch, macOS may still ask you to confirm — that's normal for Electron-based apps.
+Приложение подписано и нотариально заверено. При первом запуске macOS может запросить подтверждение, что нормально для Electron.
 
 ### Windows
 
-The default shell can be set to PowerShell or CMD under [Settings → Terminal](/docs/settings). Most users want PowerShell.
+PowerShell или CMD выбирается в разделе [Настройки → Терминал](/docs/reference/settings). Большинству пользователей подойдёт PowerShell.
 
 ### Linux
 
-AppImage and `.deb` builds are available. See the Releases page for details.
+Доступны сборки AppImage и `.deb`; подробности приведены на странице выпусков.

@@ -112,11 +112,10 @@ async function importPage(url) {
   const { section, file, sectionName } = destination(url);
   const sectionPath = section ? path.join(output, section) : output;
   await mkdir(sectionPath, { recursive: true });
-  const source = `> **Статус перевода:** исходник. Первоисточник: [Orca Docs / ${title}](${url}).\n\n`;
   const frontmatter = `---\ntitle: "${escapeYaml(title)}"\ndescription: "${escapeYaml(description)}"\nsource: "${url}"\n---\n\n`;
   await writeFile(
     path.join(sectionPath, `${file}.mdx`),
-    `${frontmatter}${source}${markdown}\n`,
+    `${frontmatter}${markdown}\n`,
     "utf8",
   );
   return { section, sectionName, file };

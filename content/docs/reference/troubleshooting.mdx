@@ -1,52 +1,49 @@
 ---
-title: "Troubleshooting & FAQ"
-description: "Troubleshooting & FAQ"
+title: "Устранение неполадок и вопросы"
+description: "Решение распространённых проблем с агентами, worktree, GitHub, CLI и браузером."
 source: "https://www.onorca.dev/docs/troubleshooting"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Troubleshooting & FAQ](https://www.onorca.dev/docs/troubleshooting).
 
-Agent won't start
------------------
-
-*   Open the terminal and run the agent's CLI manually. If it fails there, it's an auth or install problem in the CLI itself — not Orca.
-*   Make sure the CLI is on the `PATH` Orca sees (check [Settings → Agents](/docs/settings)).
-*   Try the **Restart** chip on the tab.
-
-Diff view looks wrong / stuck
------------------------------
-
-*   Click the refresh icon on the diff toolbar — Orca re-reads the worktree.
-*   External `git` operations (rebase, reset) can land between refreshes.
-
-Worktree creation fails
------------------------
-
-*   The start-from ref may not be fetched. Open a terminal in the repo and run `git fetch origin`.
-*   The target directory may already have a worktree for that branch — delete it or pick a new branch name.
-
-Orca CLI says "command not found"
----------------------------------
-
-Register the CLI under [Settings → Experimental → CLI](/docs/settings). On macOS it installs a shim into `~/.local/bin`; make sure that's on your shell's `PATH`.
-
-Browser says `browser_no_tab`
------------------------------
-
-No tab is open in the current worktree. Open one with `orca tab create --url ...` or open the browser pane manually and navigate.
-
-Performance & memory
+Агент не запускается
 --------------------
 
-*   Close worktrees you're not actively using. Each worktree keeps file watchers alive.
-*   Split layouts with many browser tabs are the biggest RAM users — close browsers you don't need.
+* Запустите CLI агента вручную в терминале. Если он не работает там, проблема связана с установкой или авторизацией, а не с Orca.
+* Убедитесь, что CLI находится в доступном Orca `PATH`, и проверьте [Настройки → Агенты](/docs/reference/settings).
+* Нажмите **Перезапустить** на вкладке.
 
-GitHub PR panel / checks / Tasks errors
----------------------------------------
+Diff не обновляется или выглядит неправильно
+--------------------------------------------
 
-Rate limits, bad `gh` auth, missing scopes, and repo access issues all show up in Source Control and the PR Checks panel. See **[Troubleshooting GitHub errors](/docs/github-errors)** for the full matrix (including why **GitHub API Budget** in Settings can look fine while REST is still blocked).
+* Нажмите кнопку обновления на панели diff.
+* Внешние операции Git, включая rebase и reset, могут попасть между обновлениями.
 
-Quick checks:
+Не создаётся worktree
+---------------------
+
+* Исходная ссылка могла быть не загружена. Выполните `git fetch origin`.
+* Для ветки уже может существовать worktree. Удалите его или выберите другое название ветки.
+
+Orca CLI сообщает `command not found`
+-------------------------------------
+
+Зарегистрируйте CLI в разделе [Настройки → Экспериментальные функции → CLI](/docs/reference/settings). В macOS устанавливается прокладка в `~/.local/bin`; каталог должен входить в `PATH`.
+
+Браузер сообщает `browser_no_tab`
+---------------------------------
+
+В текущем worktree нет вкладки браузера. Выполните `orca tab create --url ...` или откройте панель браузера вручную.
+
+Производительность и память
+---------------------------
+
+* Закрывайте неиспользуемые worktree: каждый поддерживает наблюдатели файлов.
+* Больше всего памяти занимают разделённые панели с множеством вкладок браузера.
+
+Ошибки GitHub
+-------------
+
+Лимиты, авторизация `gh`, недостающие разрешения и доступ к репозиторию влияют на управление версиями и проверки pull request. Полная таблица приведена в статье [Ошибки GitHub](/docs/reference/github-errors).
 
 ```
 gh auth status -h github.com
@@ -54,13 +51,13 @@ gh api user
 gh api rate_limit --jq '.resources.core'
 ```
 
-Logs
-----
+Журналы
+-------
 
-**Help → Open Logs** opens the directory with Orca's logs. Attach these when filing a bug.
+Команда **Справка → Открыть журналы** показывает каталог журналов Orca. Прикладывайте их к отчёту об ошибке.
 
-Reporting issues
-----------------
+Сообщить о проблеме
+-------------------
 
-*   [GitHub Issues](https://github.com/stablyai/orca/issues) — bugs and feature requests.
-*   [Discord](https://discord.gg/fzjDKHxv8Q) — real-time help.
+* [GitHub Issues](https://github.com/stablyai/orca/issues): ошибки и предложения.
+* [Discord](https://discord.gg/fzjDKHxv8Q): помощь в реальном времени.

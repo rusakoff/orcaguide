@@ -1,37 +1,36 @@
 ---
-title: "Diff viewer"
-description: "Diff viewer"
+title: "Просмотр diff"
+description: "Проверка изменений, сравнение изображений, разрешение конфликтов и добавление в индекс."
 source: "https://www.onorca.dev/docs/review/diff-viewer"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Diff viewer](https://www.onorca.dev/docs/review/diff-viewer).
 
-Orca's diff viewer is designed for serious review of AI-generated code — not a quick glance. Every worktree has a built-in diff against its start-from ref.
+Просмотр diff в Orca рассчитан на тщательную проверку кода, созданного ИИ. В каждом worktree доступно сравнение с его исходной ссылкой.
 
-Features
---------
+Возможности
+-----------
 
-*   **Combined diff** across all staged, unstaged, and untracked files.
-*   **Line numbers** for both sides, toggleable.
-*   **Image diffs** — side-by-side, swipe, and onion-skin modes for binary images.
-*   **Merge-conflict UI** with three-way view and inline resolution.
-*   **Staging by hunk or line** — same as `git add -p` but visual.
+* **Объединённый diff** для добавленных в индекс, неиндексированных и неотслеживаемых файлов.
+* Включаемые **номера строк** с обеих сторон.
+* **Сравнение изображений** рядом, ползунком или наложением.
+* Интерфейс разрешения конфликтов с трёхсторонним сравнением.
+* **Добавление в индекс по фрагментам и строкам**, как визуальный вариант `git add -p`.
 
-Scoping
--------
+Область сравнения
+-----------------
 
-The diff shows changes against the worktree's start-from ref by default. You can switch to comparing against any commit, branch, or the base ref from the diff toolbar.
+По умолчанию изменения сравниваются с исходной ссылкой worktree. На панели diff можно выбрать любой коммит, ветку или базовую ссылку.
 
-Word wrap
----------
+Перенос строк
+-------------
 
-Long lines wrap in place when diff word wrap is on, so wide diffs read top-to-bottom without horizontal scrolling. It's off by default. Toggle **Word Wrap** from the **⋯** actions menu in the diff editor header, or set the global default under **Settings → General → Diff Word Wrap**. Both controls share the same setting — toggling from the editor flips it everywhere.
+При включённом переносе длинные строки читаются сверху вниз без горизонтальной прокрутки. По умолчанию перенос отключён. Включите **Перенос строк** в меню **⋯** редактора diff или задайте общее значение в разделе **Настройки → Общие → Перенос строк diff**. Оба элемента управляют одной настройкой.
 
-Keyboard shortcuts
-------------------
+Сочетания клавиш
+----------------
 
-*   `j` / `k` — next / previous changed file.
-*   `n` / `p` — next / previous hunk.
-*   `F7` / `Shift+F7` — next / previous change in the active editor.
-*   `s` — stage the hunk under the cursor.
-*   `c` — start a comment ([Annotate AI Diff](/docs/review/annotate-ai-diff)).
+* `j` и `k`: следующий и предыдущий изменённый файл.
+* `n` и `p`: следующий и предыдущий фрагмент.
+* `F7` и `Shift+F7`: следующее и предыдущее изменение в активном редакторе.
+* `s`: добавить в индекс фрагмент под курсором.
+* `c`: начать комментарий в режиме [комментариев к изменениям ИИ](/docs/review/annotate-ai-diff).

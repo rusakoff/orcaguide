@@ -1,234 +1,153 @@
 ---
-title: "Remote Orca Servers"
-description: "Keep Orca running on another computer and connect from your laptop."
+title: "Удалённые серверы Orca"
+description: "Запуск Orca на другом компьютере и подключение с ноутбука, браузера или телефона."
 source: "https://www.onorca.dev/docs/remote-servers"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Remote Orca Servers](https://www.onorca.dev/docs/remote-servers).
+> **Статус перевода:** переведено. Первоисточник: [Orca Docs / Remote Orca Servers](https://www.onorca.dev/docs/remote-servers).
 
-Keep Orca running on another computer and connect from your laptop.
+Удалённый сервер позволяет одному компьютеру выполнять работу, а другому показывать интерфейс. Сервер хранит проекты, worktree, терминалы, вкладки, аккаунты провайдеров и сессии агентов. Ноутбук подключается к уже запущенной Orca.
 
-A Remote Orca Server lets one computer do the work while another computer provides the UI. The server keeps the projects, worktrees, terminals, tabs, provider accounts, and agent sessions. Your laptop connects to that running Orca instance.
+Проще всего установить настольную Orca на обе машины и связать их через [Tailscale](https://tailscale.com/). Команда `orca serve` для этого варианта не нужна.
 
-The easiest setup is the Orca desktop app on both computers, connected through [Tailscale](https://tailscale.com/). You do not need to run `orca serve` for this path.
+Бета-версия
 
-Beta
+Серверы пока имеют статус бета. Держите сервер и клиент в доверенной частной сети, например одном tailnet Tailscale или LAN.
 
-Remote Orca Servers are beta. Keep the server and client on a private network path you control, such as the same Tailscale tailnet or LAN.
-
-What runs where
----------------
+Распределение работы
+--------------------
 
 ```
-Client computer · Orca client
-  Shows the UI and sends your input
+Клиент · Orca
+  Показывает интерфейс и передаёт ввод
                  │
-                 │ private network route
+                 │ частная сеть
                  ▼
-Server computer · Orca server
-  Stores repos and worktrees
-  Runs terminals and agents
+Сервер · Orca
+  Хранит репозитории и worktree
+  Запускает терминалы и агентов
 ```
 
-Install and authenticate Codex, Claude Code, OpenCode, `git`, and any provider CLIs on the **server computer**. A login on your laptop does not automatically carry over to the server.
+Codex, Claude Code, OpenCode, Git и остальные CLI нужно установить и авторизовать на **сервере**. Вход на ноутбуке не переносится автоматически.
 
-Recommended: desktop app + Tailscale
-------------------------------------
+Рекомендуемый вариант: приложение и Tailscale
+---------------------------------------------
 
-You need:
+Нужны Orca и Tailscale на обеих машинах, один tailnet и постоянно включённый сервер с запущенной Orca. Частный адрес Tailscale обычно начинается со `100.`.
 
-*   Orca installed and updated on both computers
-*   Tailscale installed on both computers
-*   Both computers signed in to the same tailnet
-*   The server computer awake, online, and running Orca
+### 1\. Создайте ссылку на сервере
 
-Tailscale gives the server a private address that usually starts with `100.`. Orca puts that address first in its connection-address picker.
+1. Откройте Orca на серверном компьютере.
+2. Перейдите в **Настройки → Удалённые серверы Orca**.
+3. В разделе публикации приложения нажмите **Новая ссылка**.
+4. Выберите адрес Tailscale вида `100.x.y.z`.
+5. Нажмите **Создать ссылку доступа** и скопируйте её.
 
-### 1\. Create an access link on the server
+Если адрес не виден, проверьте Tailscale и обновите список.
 
-On the computer that should keep the sessions running:
+![Создание ссылки доступа на сервере](https://www.onorca.dev/docs/remote-server-share-desktop.png)
 
-1.  Open the Orca desktop app.
-2.  Open **Settings → Remote Orca Servers**.
-3.  Under **Advertise this app as a server**, click **New Link**.
-4.  For **Connection address**, select the Tailscale address. It usually looks like `100.x.y.z`.
-5.  Click **Generate Access Link**.
-6.  Copy the link under **Pair another Orca client**.
+Создание ссылки доступа на сервере
 
-If the Tailscale address is missing, confirm Tailscale is connected and click the refresh button beside **Connection address**.
+Храните ссылку как пароль: она предоставляет доступ к среде Orca.
 
-![On the server: choose its Tailscale address, generate an access link, and copy the redacted pairing URL. The grant can be revoked later.](https://www.onorca.dev/docs/remote-server-share-desktop.png)
+### 2\. Добавьте сервер на клиенте
 
-On the server: choose its Tailscale address, generate an access link, and copy the redacted pairing URL. The grant can be revoked later.
+1. Откройте **Настройки → Удалённые серверы Orca**.
+2. Нажмите **Добавить сервер**.
+3. Укажите понятное название.
+4. Вставьте ссылку и подтвердите.
+5. Если сервер отключён, нажмите **Подключить**.
 
-Keep the access link private
+![Добавление удалённого сервера на клиенте](https://www.onorca.dev/docs/remote-server-add-client.png)
 
-The pairing URL grants access to this Orca runtime. Treat it like a password and send it only to the client you intend to pair.
+Добавление удалённого сервера на клиенте
 
-### 2\. Add the server on your laptop
+Добавление не направляет на сервер все новые проекты автоматически. Откройте **Дополнительно → Активный сервер**, только если проекты, терминалы, проверки провайдера, браузер и мобильное приложение должны по умолчанию использовать этот runtime.
 
-On the computer you want to use as the client:
+Работа с сервером
+-----------------
 
-1.  Open **Settings → Remote Orca Servers**.
-2.  Click **Add Server**.
-3.  Enter a recognizable name, such as `Remote Server`.
-4.  Paste the access link from the server.
-5.  Click **Add Server**.
-6.  If the saved server shows **Disconnected**, click **Connect**.
+После подключения используйте сервер и его проекты как обычно. Терминалы, агенты, файлы, worktree и состояние сессий находятся на сервере. Агенты продолжают работать после сна клиента, но сервер должен оставаться включённым, иметь репозитории, инструменты и учётные данные. Повторное подключение возвращает сохранённое сервером состояние.
 
-![On the client: name the server, paste its access link, and add it. The pairing code is redacted in this example.](https://www.onorca.dev/docs/remote-server-add-client.png)
-
-On the client: name the server, paste its access link, and add it. The pairing code is redacted in this example.
-
-Adding a server saves it without forcing every new project onto it. Open **Advanced → Active Server** only when you want server-routed projects, terminals, provider checks, and browser or mobile handoff to use that server by default.
-
-Use the remote server
+Доступ и безопасность
 ---------------------
 
-Once the server shows **Connected**, select it or one of its projects and use Orca normally. Terminals, agent processes, files, worktrees, and session state live on the server computer.
+Для каждого клиента создаётся отдельный отзывной токен:
 
-That means:
+* удаление разрешения сразу отключает использующий его клиент;
+* новая ссылка заменяет предыдущую неиспользованную, но не отзывает уже подключённые клиенты;
+* ограничивайте ACL Tailscale;
+* не публикуйте порт Orca в интернете, используйте Tailscale, WireGuard, доверенную LAN, SSH или защищённый туннель;
+* `127.0.0.1` подходит только для самого сервера.
 
-*   agents keep running when the client laptop sleeps or disconnects;
-*   the server needs the repository, tools, and credentials used by those agents;
-*   the server must stay awake and connected to the tailnet;
-*   reconnecting the client returns you to the server-owned state.
-
-Access and security
--------------------
-
-Orca creates a separate, revocable token for each paired client. The server lists these under **Shared Server Access**.
-
-*   Click the trash button beside a grant to revoke it. Active clients using that grant are disconnected immediately.
-*   Generating another link replaces the previous **unused** link. Clients that already paired keep their own grants until you revoke them.
-*   Keep Tailscale ACLs or grants as narrow as your setup allows.
-*   Do not forward the Orca port directly to the public internet. Prefer Tailscale, WireGuard, a trusted LAN, SSH forwarding, or an authenticated tunnel.
-*   Do not select `127.0.0.1` for another computer. That address only works on the server itself.
-
-Alternative: `orca serve`
+Альтернатива: `orca serve`
 -------------------------
 
-Use `orca serve` when the host should run without the desktop window—for example, a headless Linux server or a service-managed VM. For a MacBook or desktop you can leave signed in, the in-app setup above is simpler.
-
-Install Orca and its bundled CLI on the server, then run:
+Для Linux без интерфейса или управляемой службы запустите:
 
 ```
-orca serve --pairing-address <server-tailscale-ip-or-hostname>
+orca serve --pairing-address <tailscale-ip-или-hostname>
 ```
 
-For example:
+Например:
 
 ```
 orca serve --pairing-address 100.64.1.20
 ```
 
-The command:
-
-*   starts the Orca runtime without opening the desktop window;
-*   runs in the foreground until you press `Ctrl-C`;
-*   prints the bound endpoint and a runtime pairing URL;
-*   uses `--pairing-address` only for the address clients should dial.
-
-Paste the printed pairing URL into **Settings → Remote Orca Servers → Add Server** on the client.
-
-Add `--port 6768` when a firewall, tunnel, or service definition requires a fixed port:
+Команда запускает runtime без окна, работает на переднем плане до `Ctrl-C` и выводит endpoint и ссылку подключения. Параметр `--pairing-address` задаёт адрес для клиентов. При необходимости фиксированного порта:
 
 ```
 orca serve --port 6768 --pairing-address 100.64.1.20
 ```
 
-Use only one host mode at a time. If the Orca desktop app is already sharing that computer, do not start a second `orca serve` process for the same setup.
+Не запускайте приложение и второй процесс `orca serve` для одного сервера одновременно.
 
-### Mobile from a headless server
-
-For the Orca mobile app, request a mobile-scoped QR code and link:
+### Мобильное подключение к серверу без интерфейса
 
 ```
 orca serve --pairing-address 100.64.1.20 --mobile-pairing
 ```
 
-Keep the phone on the same tailnet, open Orca Mobile, choose **Pair**, and scan the terminal QR code or paste the printed link.
+Телефон должен находиться в том же tailnet. В Orca Mobile выберите **Подключить** и отсканируйте QR-код или вставьте ссылку.
 
-Desktop app or `orca serve`?
-----------------------------
+Приложение или `orca serve`
+---------------------------
 
-Desktop app on the server
+Настольное приложение удобнее для старого ноутбука, Mac mini и компьютера с интерфейсом. `orca serve` подходит серверу Linux, виртуальной машине и системной службе.
 
-`orca serve`
+Удалённый сервер или SSH
+------------------------
 
-Best for
+[Worktree по SSH](/docs/reference/ssh) оставляют runtime на ноутбуке и используют сервер только для выбранных worktree. Удалённый сервер Orca владеет всей средой и сохраняет общие сессии для настольных, браузерных, мобильных клиентов и автоматизаций. Полное сравнение: [Способы запуска](/docs/reference/ways-to-run).
 
-An old laptop, Mac mini, or desktop
+Устранение неполадок
+--------------------
 
-A headless Linux box, VM, or managed service
+### Нет адреса Tailscale
 
-Setup
+Проверьте подключение Tailscale и один tailnet, затем обновите список. IPv4 обычно начинается со `100.`.
 
-Settings and buttons
+### Сервер отключён
 
-Terminal command and service configuration
+Убедитесь, что компьютер не спит, Orca работает, устройства видны в Tailscale, а ACL разрешают соединение. При несовместимой версии обновите обе Orca.
 
-Server window
+### Ссылка попала не тому человеку
 
-Open
+Отзовите разрешение в разделе общего доступа и создайте новую ссылку.
 
-None
+### Сервер не находит CLI агента
 
-Access link
+Установите и авторизуйте CLI на сервере. Используются его `PATH`, домашний каталог и учётные данные.
 
-**New Link → Generate Access Link**
+### `orca serve` публикует неверный адрес
 
-Printed in the terminal
+Перезапустите команду с адресом, доступным клиенту. Не используйте wildcard или `127.0.0.1`.
 
-Lifetime
-
-While the desktop app is running
-
-While the foreground process or service is running
-
-Remote Orca Server or SSH?
---------------------------
-
-Use [SSH worktrees](/docs/ssh) when Orca on your laptop should own the runtime and use another machine only to run selected worktrees and terminals.
-
-Use a Remote Orca Server when the other machine should own the full Orca runtime and preserve shared sessions for desktop, browser, mobile, or automation clients.
-
-See [Ways to run Orca](/docs/ways-to-run) for the full comparison.
-
-Troubleshooting
----------------
-
-### The Tailscale address is not listed
-
-On the server, confirm Tailscale is connected, then click the refresh button beside **Connection address**. Both computers must be signed in to the same tailnet. A Tailscale IPv4 address usually starts with `100.`.
-
-### The server is disconnected
-
-Confirm the server computer is awake, Orca is still running, and Tailscale shows both devices online. Check your tailnet ACLs or grants if one device cannot reach the other.
-
-Update Orca on both computers if the server row reports an incompatible protocol version.
-
-### The access link was shared with the wrong person
-
-On the server, open **Settings → Remote Orca Servers → Shared Server Access** and revoke that grant. Generate a new link for the intended client.
-
-### The server cannot find an agent CLI
-
-Install and authenticate that CLI on the server computer. Remote sessions use the server's `PATH`, home directory, and credentials—not the client's.
-
-### `orca serve` advertises the wrong address
-
-Stop the command and restart it with an address the client can reach:
-
-```
-orca serve --pairing-address <reachable-tailscale-ip-or-hostname>
-```
-
-Do not use a wildcard address or `127.0.0.1` for a remote client.
-
-Next steps
+Что дальше
 ----------
 
-*   Compare every run mode in [Ways to run Orca](/docs/ways-to-run).
-*   Use [SSH worktrees](/docs/ssh) when the laptop should own the Orca runtime.
-*   See the [Orca CLI reference](/docs/cli/reference) for `orca serve` flags and automation commands.
+* [Способы запуска Orca](/docs/reference/ways-to-run)
+* [Worktree по SSH](/docs/reference/ssh)
+* [Справочник Orca CLI](/docs/cli/reference)

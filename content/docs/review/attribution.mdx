@@ -1,26 +1,25 @@
 ---
-title: "Attribution"
-description: "Attribution"
+title: "Авторство изменений"
+description: "Определение строк, написанных человеком или ИИ-агентом."
 source: "https://www.onorca.dev/docs/review/attribution"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Attribution](https://www.onorca.dev/docs/review/attribution).
 
-Orca tracks provenance on every line it sees an agent touch, so when you read a diff you can tell at a glance which lines were written by a human and which came from an AI.
+Orca отслеживает происхождение строк, которых касался агент. При чтении diff сразу видно, что написал человек, а что создал ИИ.
 
-How it works
-------------
+Как это работает
+----------------
 
-When an agent writes to a file through its tooling, Orca records the ranges. The diff viewer renders AI-originated lines with a subtle marker in the gutter. Human edits on top of AI code flip the attribution back to human.
+Когда агент изменяет файл своими инструментами, Orca сохраняет затронутые диапазоны. В просмотре diff у строк агента появляется ненавязчивый индикатор в поле. Если человек редактирует созданный ИИ код, авторство снова меняется на человеческое.
 
-Why it matters
---------------
+Зачем это нужно
+---------------
 
-*   You know which parts of a PR deserve extra scrutiny.
-*   Security and compliance audits can separate AI-written from human-written code.
-*   Reviews get faster — you don't re-read code you just wrote by hand.
+* Видно, какие части pull request требуют особенно внимательной проверки.
+* При аудите безопасности и соответствия можно разделить код человека и ИИ.
+* Проверка идёт быстрее, поскольку вручную написанный код не приходится перечитывать повторно.
 
-Scope
------
+Область действия
+----------------
 
-Attribution is local to Orca — it doesn't get committed to git. If you want persistent attribution, export the diff metadata from the diff toolbar.
+Сведения об авторстве хранятся локально в Orca и не попадают в Git. Для постоянного хранения экспортируйте метаданные diff с панели инструментов.

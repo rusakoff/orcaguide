@@ -1,126 +1,86 @@
 ---
-title: "Settings reference"
-description: "Settings reference"
+title: "Справочник настроек"
+description: "Разделы настроек Orca и доступные в них параметры."
 source: "https://www.onorca.dev/docs/settings"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Settings reference](https://www.onorca.dev/docs/settings).
 
-Settings are grouped into panes. Everything here is searchable with `Cmd-,` then typing a keyword. Feature pages in these docs link directly to the relevant pane.
+Настройки разделены на панели. Откройте поиск сочетанием `Cmd-,` и введите ключевое слово.
 
-General
--------
+Общие
+-----
 
-*   **Orca CLI** — register the bundled command-line tool for shells and agents.
-*   **Updates** — check for and install updates. Shift-click **Check for Updates** to include the latest RC build, or Cmd-click (macOS) / Ctrl-click (Windows and Linux) to check for the latest perf-tagged prerelease.
-*   **UI zoom** — per-install UI scale.
-*   **Default new-worktree name** — custom prefix or marine creatures.
+* Регистрация Orca CLI.
+* Проверка обновлений. `Shift` включает RC, а `Cmd` в macOS или `Ctrl` в Windows и Linux проверяет сборки с меткой производительности.
+* Масштаб интерфейса.
+* Стандартное название нового worktree.
 
-Appearance
+Оформление
 ----------
 
-*   Theme, accent color, density.
-*   Font family for UI and editor (independent settings — pick any installed font for either).
-*   Editor minimap toggle.
-*   Status bar toggles.
-*   App Icon — cycle between Classic, Watercolor, and Blue for the icon shown in the Dock and window switcher.
-*   Language — switch the Orca interface between System (follows the OS), English, 中文（简体）, 한국어, 日本語, or Español.
+Тема, акцент, плотность, шрифты интерфейса и редактора, мини-карта, строка состояния, значок приложения и язык. Интерфейс поддерживает системный язык, английский, упрощённый китайский, корейский, японский и испанский.
 
 Git
 ---
 
-*   Default base ref resolver.
-*   Commit signing options.
-*   Editor for external git tools.
-*   Auto-Rename Branch From Work — rename Orca-generated creature branches after an agent starts work.
-*   **GitHub API Budget** — remaining REST (core), Search, and GraphQL quota from the local `gh` CLI. Useful when PR checks or Tasks stop refreshing; see [Troubleshooting GitHub errors](/docs/github-errors) if the numbers look fine but GitHub still rate-limits live calls.
+Базовая ссылка, подпись коммитов, внешний редактор Git, автоматическое переименование веток и **Бюджет GitHub API** для REST, Search и GraphQL. Если показатели не объясняют ошибку, см. [Ошибки GitHub](/docs/reference/github-errors).
 
-Terminal
+Терминал
 --------
 
-*   Font, theme, cursor style, padding.
-*   Ghostty import.
-*   Warp theme import — bring in your Warp YAML themes with **Import themes from Warp** (auto-discovers Warp's themes folder per OS) or **Import from YAML** for any folder of Warp-format theme files.
-*   JIS Yen (¥) to Backslash (\\) for macOS Japanese keyboards.
-*   Windows default shell (PowerShell or CMD).
+Шрифт, тема, курсор, отступы, импорт Ghostty и Warp, преобразование клавиши JIS Yen в обратную косую черту и стандартная оболочка Windows.
 
-Quick Commands
---------------
+Быстрые команды
+---------------
 
-*   Saved terminal commands, scoped globally or to a project.
-*   Scope filters for reviewing and editing the command list.
+Сохранённые команды терминала с глобальной или проектной областью и фильтрами списка.
 
-Agents
+Агенты
 ------
 
-*   Installed agents — detected and custom.
-*   Enable or disable detected agents so launch menus only show the CLIs you want to use.
-*   Agent Permissions — choose **Yolo** for fewer CLI permission prompts, or **Manual** to keep each agent's own approval flow for agents you haven't customized.
-*   Claude and Codex account lists.
-*   Startup hooks per agent.
+Обнаруженные и пользовательские агенты, видимость в меню запуска, режимы разрешений **Yolo** и **Ручной**, аккаунты Claude и Codex и хуки запуска.
 
-Browser
+Браузер
 -------
 
-*   Profiles (see [Browser-use profiles](/docs/browser/profiles)).
-*   Default Zoom — zoom level applied to newly opened browser tabs (per-tab adjustments via Cmd-wheel are remembered separately).
-*   Design Mode defaults.
-*   Devtools opt-in.
+[Профили](/docs/browser/profiles), масштаб новых вкладок, параметры режима дизайна и инструменты разработчика.
 
-Integrations
-------------
+Интеграции
+----------
 
-*   GitHub OAuth.
-*   Linear API token.
-*   Jira — Atlassian site URL, email, and API token (see [Jira items drawer](/docs/review/jira)).
-*   MiniMax — paste a MiniMax session cookie (from `platform.minimax.io/console/usage`) to enable local usage and rate-limit tracking for the MiniMax CLI. Optional group ID and usage models fields override the defaults picked from the cookie.
-*   MCP servers.
+GitHub OAuth, Linear, Jira, MiniMax и серверы MCP. Для Jira указываются сайт, почта и токен; для MiniMax можно добавить cookie с `platform.minimax.io/console/usage`.
 
-Notifications
--------------
+Уведомления
+-----------
 
-*   Agent-finished: system, sound, chip.
-*   Custom desktop notification sound per category.
-*   PR check failures.
-*   Update available.
+Системные, звуковые и встроенные уведомления о завершении агента, пользовательские звуки, ошибки проверок pull request и обновления.
 
-Voice
+Голос
 -----
 
-*   Cloud speech-to-text models — paste an OpenAI API key under **OpenAI Transcription** to enable cloud STT for dictation. The key is stored locally and only used to call OpenAI's transcription API.
+Ключ OpenAI API для облачного распознавания речи хранится локально и используется только API транскрибации.
 
 SSH
 ---
 
-*   SSH worktrees, targets, passphrases, default identity file.
+Удалённые worktree, узлы, пароли ключей и стандартный файл идентификации.
 
-Remote Orca Servers
--------------------
+Удалённые серверы Orca
+----------------------
 
-*   Pair and connect to remote Orca runtimes.
-*   Advertise this desktop app as a server and create revocable access links.
-*   Advanced default runtime selection for server-routed projects, terminals, and provider checks.
+Подключение удалённых сред, публикация приложения как сервера, отзывные ссылки доступа и выбор стандартной среды.
 
-Shortcuts
----------
+Сочетания клавиш
+----------------
 
-*   Full keymap — every binding remappable.
-*   Toggle Sleeping Workspaces ships unbound; assign it here if you want a direct shortcut for the sidebar sleeping-worktree filter.
-*   Close all editor tabs defaults to `Cmd+Option+W` on macOS and `Ctrl+Alt+W` on Windows / Linux.
+Все команды переназначаются. Для показа спящих рабочих пространств стандартного сочетания нет. Закрытие всех вкладок редактора использует `Cmd+Option+W` в macOS и `Ctrl+Alt+W` в Windows и Linux.
 
-Repository
-----------
+Репозиторий
+-----------
 
-*   Per-repo base ref and hooks.
-*   Auto-run commands on worktree create.
-*   Repo icons for the sidebar: choose an icon, emoji, uploaded image, website favicon, or GitHub avatar, then pick a preset or custom hex badge color.
-*   Source Control AI overrides for commit messages, pull request details, and branch names.
+Базовая ссылка, хуки, команды создания worktree, значки на боковой панели и рецепты ИИ для сообщений коммитов, pull request и названий веток.
 
-Experimental
-------------
+Экспериментальные функции
+-------------------------
 
-*   [Activity Page](/docs/activity) — Slack-style worktree feed for agent events.
-*   Compact worktree cards — hide redundant second lines in the sidebar while the layout is still experimental.
-*   [Agent hibernation](/docs/agents/hibernation) — pause idle background agents and auto-resume them on reopen.
-*   **Per-Workspace Environments** — show setup controls and workspace **Run on** targets for repo-owned, on-demand environments (cloud sandboxes, VMs, or local Docker). See [Ways to run Orca](/docs/ways-to-run#4-per-workspace-environments-ephemeral-vms).
-*   Features not yet stable — behavior may change.
+[Лента агентов](/docs/reference/activity), компактные карточки, [гибернация](/docs/agents/hibernation), [среды для отдельных рабочих пространств](/docs/reference/ways-to-run#4-per-workspace-environments-ephemeral-vms) и другие нестабильные функции.

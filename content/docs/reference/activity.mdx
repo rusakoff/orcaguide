@@ -1,38 +1,35 @@
 ---
-title: "Agents feed"
-description: "Threaded feed of agent completions, blocking states, response previews, and worktree creation events across every worktree."
+title: "Лента агентов"
+description: "Общая лента завершений, блокировок, ответов и создания worktree."
 source: "https://www.onorca.dev/docs/activity"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Agents feed](https://www.onorca.dev/docs/activity).
 
-Threaded feed of agent completions, blocking states, response previews, and worktree creation events across every worktree.
+Раздел **Агенты** на боковой панели открывает общую хронологическую ленту событий всех worktree: завершения, блокирующие вопросы, непрочитанные ответы и создание worktree. Она дополняет [уведомления](/docs/reference/notifications) отдельных worktree и позволяет разбирать события в одном месте.
 
-The **Agents** entry in the sidebar opens a threaded feed of agent events across every worktree — completions, blocking questions, unread state, and worktree creation. It complements the per-worktree [notifications](/docs/notifications) view by giving you one chronological surface to triage from.
+Лента включена по умолчанию. Новые события отмечаются счётчиком непрочитанных. Нажатие переводит к нужному worktree и панели, как при переходе из системного уведомления.
 
-The entry is on by default. It shows an unread badge when new events have arrived since you last visited; clicking an entry jumps you to the matching worktree and pane — the same handoff Orca does from a system notification.
+Для перехода к фильтру ленты нажмите `Cmd+F` в macOS или `Ctrl+F` в Windows и Linux. Если фокус находится во встроенном терминале, сочетание продолжает управлять поиском терминала.
 
-Use `Cmd+F` on macOS or `Ctrl+F` on Windows and Linux to focus the feed filter. When the embedded terminal has focus, the same shortcut stays with the terminal instead.
+Содержимое ленты
+----------------
 
-What shows up
--------------
+В ленте появляются:
 
-Each entry in the feed is one of:
+* завершение хода агента, переход в ожидание или блокирующий вопрос;
+* создание нового worktree;
+* агент, слишком долго ожидающий ввода;
+* краткий фрагмент последнего ответа для просмотра без открытия обсуждения.
 
-*   An agent finishing a turn, either idle or blocked on a question.
-*   A new worktree being created.
-*   An agent that's been waiting on input long enough to surface as blocking.
-*   A short preview of the agent's most recent response, so you can skim the feed without opening every thread.
+События группируются по состоянию. Работающие агенты закреплены сверху, поэтому их видно сразу.
 
-Threads are grouped by status — running agents stay pinned at the top so you can spot the ones still working at a glance.
+Связь с уведомлениями
+---------------------
 
-Interplay with notifications
-----------------------------
+Лента не заменяет [колокольчик в заголовке](/docs/reference/notifications) и системные уведомления о завершении агента. Она нужна после долгого отсутствия: вместо просмотра каждого worktree достаточно пройти по общей ленте.
 
-The Agents feed doesn't replace the [header bell](/docs/notifications) or system notifications — those still fire on agent-finished pings. The feed is the catch-up surface when you've been away from Orca: instead of scrolling each worktree to find what changed, scan it.
-
-Next steps
+Что дальше
 ----------
 
-*   [Notifications & Inbox](/docs/notifications) — system pings, the header bell, and per-category tuning.
-*   [Agents & sessions](/docs/model/agents-sessions) — how Orca tracks the working/idle/blocked transitions this feed surfaces.
+* [Уведомления и входящие](/docs/reference/notifications): системные сигналы, колокольчик и настройка категорий.
+* [Агенты и сессии](/docs/model/agents-sessions): состояния работы, ожидания и блокировки.

@@ -1,65 +1,57 @@
 ---
-title: "Privacy & Telemetry"
-description: "What anonymous usage data Orca collects, what it never collects, and how to opt out."
+title: "Конфиденциальность и телеметрия"
+description: "Какие анонимные данные собирает Orca, какие не собирает и как отключить отправку."
 source: "https://www.onorca.dev/docs/telemetry"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Privacy & Telemetry](https://www.onorca.dev/docs/telemetry).
 
-What anonymous usage data Orca collects, what it never collects, and how to opt out.
+В готовых сборках Orca собирается анонимная статистика использования. Здесь перечислены отправляемые данные, ограничения и способы отключения.
 
-This page describes the anonymous product-usage telemetry we collect in packaged Orca builds, what we never collect, and how to opt out.
+Кратко
+------
 
-Summary
--------
+* **Анонимно.** События связаны со случайным идентификатором на вашем компьютере. Аккаунт, почта, имя пользователя и IP-адрес не собираются.
+* **Без содержимого.** Не передаются файлы, запросы, ответы агентов, вывод терминала, репозитории, ветки, URL, пути и сообщения коммитов.
+* **Всегда отключено**, если задано `DO_NOT_TRACK=1` или `ORCA_TELEMETRY_DISABLED=1`.
 
-*   **Anonymous.** Events are keyed by a random ID stored locally on your machine. No account, email, IP address, or user name is collected.
-*   **No content.** We never transmit file contents, prompts, agent output, terminal output, repo names, branch names, URLs, paths, or commit messages.
-*   **Always off when:** `DO_NOT_TRACK=1` or `ORCA_TELEMETRY_DISABLED=1` is set.
-
-What we collect
----------------
-
-Alongside each event we include basic build and platform information: the Orca version, your operating system (e.g. `darwin` / `win32` / `linux`), CPU architecture, coarse OS release string, release channel (`stable` or `rc`), and the anonymous local ID described above. No hostname, no username, no IP.
-
-The categories of behavior we observe:
-
-*   **Lifecycle** — when the app opens. Used to estimate daily, weekly, and monthly active users.
-*   **Repos and workspaces** — when you add a repo or create a workspace. We record _how_ you did it (e.g. folder picker vs. clone URL; command palette vs. drag-and-drop), never the repo name, URL, path, branch name, or any free-form text.
-*   **Agents** — when you start an agent, which agent kind it was (from a fixed list like `claude-code`, `codex`, `gemini`, etc.), and where you launched it from. Never the prompt, model details, or agent output.
-*   **Agent errors** — a coarse error category and which agent kind was involved. We never see raw error messages or stack traces; per-incident detail stays in a local diagnostic trace file on your machine and only reaches Orca if you explicitly share a diagnostic bundle.
-*   **Settings** — when you toggle one of a small whitelisted set of feature-flag or UX preferences. We record which preference changed and whether it's a boolean or an enum, never the raw value of any free-form setting.
-*   **Privacy controls** — when you opt in or out of telemetry, so we can tell from aggregate data whether our consent UI is working.
-
-Every field we transmit is either a fixed enum value, a version string, or the anonymous local ID. No free-form strings from any UI input ever leave your machine.
-
-What we never send
-------------------
-
-*   No file paths, repo names, branch names, URLs, commit messages, or current working directory.
-*   No agent prompts, responses, or terminal contents.
-*   No raw error messages or stack frames. Per-incident error context stays in a local diagnostic trace file on your machine and only reaches us if you explicitly share a diagnostic bundle.
-*   No user account information (Orca has no account system).
-*   No IP address and no precise geoip; country is the only geographic signal derived from the request.
-*   No vendor-side user profile tied to your anonymous ID.
-
-How to opt out
+Что собирается
 --------------
 
-You can disable telemetry in three ways. Any one of them is sufficient; they compose.
+К событию добавляются версия Orca, операционная система (`darwin`, `win32` или `linux`), архитектура процессора, общий номер выпуска ОС, канал `stable` или `rc` и локальный анонимный ID. Имя компьютера, пользователь и IP не передаются.
 
-1.  **In the app.** Settings → Privacy → toggle "Share anonymous usage data" off. The change is immediate and persistent.
+Категории событий:
 
-![Settings → Privacy — toggle 'Share anonymous usage data' off to disable telemetry.](https://www.onorca.dev/docs/privacy-toggle.png)
+* **Жизненный цикл:** открытие приложения для подсчёта активных пользователей.
+* **Репозитории и рабочие пространства:** способ добавления или создания, но не название, URL, путь, ветка и произвольный текст.
+* **Агенты:** тип из фиксированного списка и место запуска, но не запрос, модель и вывод.
+* **Ошибки агентов:** общая категория и тип агента. Сообщения и стек остаются в локальном диагностическом файле до явной отправки пакета.
+* **Настройки:** изменение небольшого разрешённого списка флагов и параметров интерфейса без произвольных значений.
+* **Управление конфиденциальностью:** включение и отключение телеметрии для проверки интерфейса согласия.
 
-Settings → Privacy — toggle 'Share anonymous usage data' off to disable telemetry.
+Каждое поле является фиксированным перечислением, версией или анонимным ID. Произвольный ввод пользователя не отправляется.
 
-2.  **`DO_NOT_TRACK=1`** — community-standard environment variable. Disables transmission for that launch. Unsetting it restores your stored preference on the next launch.
-3.  **`ORCA_TELEMETRY_DISABLED=1`** — Orca-specific kill switch with the same semantics as `DO_NOT_TRACK`.
+Что никогда не отправляется
+---------------------------
 
-Where the data goes
--------------------
+Пути, названия репозиториев и веток, URL, сообщения коммитов, рабочий каталог, запросы и ответы агентов, терминал, необработанные ошибки, данные аккаунта и точное местоположение не передаются. Страна является единственным географическим признаком запроса. Профиль у провайдера по анонимному ID не создаётся.
 
-*   **Vendor:** PostHog Cloud, **United States** region.
-*   **Retention:** PostHog Cloud's plan-level default per their pricing page. We do not set a custom retention window.
-*   **Access:** project membership is restricted to a small number of Orca maintainers.
+Как отключить
+-------------
+
+Достаточно любого способа:
+
+1. Отключить **Передавать анонимные данные об использовании** в разделе **Настройки → Конфиденциальность**.
+
+![Отключение анонимных данных в настройках конфиденциальности](https://www.onorca.dev/docs/privacy-toggle.png)
+
+Отключение анонимных данных в настройках конфиденциальности
+
+2. Установить `DO_NOT_TRACK=1` для текущего запуска.
+3. Установить `ORCA_TELEMETRY_DISABLED=1` с тем же действием.
+
+Куда отправляются данные
+------------------------
+
+* **Провайдер:** PostHog Cloud, регион США.
+* **Хранение:** стандартный срок тарифа PostHog Cloud; отдельный срок Orca не задаёт.
+* **Доступ:** ограниченная группа сопровождающих Orca.

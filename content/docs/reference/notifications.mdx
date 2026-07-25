@@ -1,40 +1,33 @@
 ---
-title: "Notifications & Inbox"
-description: "Notifications & Inbox"
+title: "Уведомления и входящие"
+description: "Сигналы о завершении агентов, непрочитанные события и пользовательские звуки."
 source: "https://www.onorca.dev/docs/notifications"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Notifications & Inbox](https://www.onorca.dev/docs/notifications).
 
-Orca runs agents, not just terminals, so it knows when an agent actually finishes versus when it's just paused. Notifications lean on that signal so you can queue three agents, walk away, and come back when the first one is done.
+Orca различает завершение работы агента и временную паузу. Можно запустить несколько агентов, отойти и вернуться после первого готового результата.
 
-Agent-finished pings
---------------------
+Завершение агента
+-----------------
 
-When an agent transitions from working to idle, Orca fires a notification — system notification, sound, and a chip on the worktree.
+При переходе агента из работы в ожидание Orca отправляет системное уведомление, воспроизводит звук и показывает индикатор на worktree.
 
-Persistent bell
----------------
+Постоянный колокольчик
+----------------------
 
-The header bell shows unread notifications across all worktrees. Clicking a notification jumps to the matching worktree and pane.
+Колокольчик в заголовке показывает непрочитанные события всех worktree. Нажатие переводит к соответствующей панели. В macOS тот же счётчик отображается на значке Orca в Dock.
 
-On macOS, the same unread count is mirrored as a badge on the Dock icon, so you can spot pending agent pings without bringing Orca to the foreground.
+Отметка как непрочитанного
+--------------------------
 
-Mark unread
------------
+В контекстном меню уведомление можно снова отметить непрочитанным, если к нему нужно вернуться позже.
 
-Right-click a notification to mark unread — useful when you've triaged something but want to come back to it later.
+Настройка
+---------
 
-Tuning
-------
+Системные уведомления, звук и индикаторы отдельно включаются в разделе [Настройки → Уведомления](/docs/reference/settings).
 
-Turn off specific categories (system, sound, chip-only) under [Settings → Notifications](/docs/settings).
+Пользовательские звуки
+----------------------
 
-Custom sounds
--------------
-
-Pick a custom desktop notification sound per category under [Settings → Notifications](/docs/settings) — point at any audio file on disk, or pick from Orca's built-in set. Useful when you want agent-finished pings to stand out from system mail and Slack.
-
-Supported formats: MP3, WAV, OGG, M4A, AAC, FLAC. One file applies to all delivered desktop notifications.
-
-When you use a custom sound, set its playback volume from the same settings pane.
+Для каждой категории можно выбрать аудиофайл на диске или встроенный звук Orca. Поддерживаются MP3, WAV, OGG, M4A, AAC и FLAC. Один файл применяется ко всем доставленным уведомлениям категории, а громкость задаётся на той же панели.

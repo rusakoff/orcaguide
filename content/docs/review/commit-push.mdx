@@ -1,63 +1,62 @@
 ---
-title: "Commit & push from Orca"
-description: "Commit & push from Orca"
+title: "Коммит и отправка из Orca"
+description: "Добавление изменений в индекс, создание коммита, отправка ветки и открытие проверки."
 source: "https://www.onorca.dev/docs/review/commit-push"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Commit & push from Orca](https://www.onorca.dev/docs/review/commit-push).
 
-You can commit, push, and open the review without leaving Orca. The commit panel lives next to the diff viewer and is designed for the common case — review, stage, commit, push, move on.
+Создать коммит, отправить ветку и открыть проверку можно, не покидая Orca. Панель коммита расположена рядом с просмотром diff и рассчитана на обычный цикл: проверить, добавить в индекс, создать коммит, отправить и перейти дальше.
 
-Commit
-------
+Создание коммита
+----------------
 
-1.  Stage changes by hunk or by file from the diff.
-2.  Write a commit message in the bottom panel, or use **Generate with AI** when you want Orca to draft one from the staged changes.
-3.  Hit **Commit** (`Cmd-Enter`).
+1. Добавьте изменения в индекс по фрагментам или файлам.
+2. Напишите сообщение в нижней панели либо нажмите **Создать с помощью ИИ**, чтобы Orca подготовила его по изменениям в индексе.
+3. Нажмите **Коммит** или `Cmd-Enter`.
 
-Pre-commit hooks from the repo run as usual. If a hook fails Orca surfaces the output inline.
+Хуки pre-commit репозитория выполняются как обычно. При ошибке Orca показывает их вывод на месте.
 
-When a commit fails, use **Fix with AI** from the failure details to start the default agent in the active worktree with the hook output, attempted commit message, and staged file list. The agent gets a repair prompt only — it is not asked to bypass hooks, commit, push, or open a review.
+В подробностях неудачного коммита доступно действие **Исправить с помощью ИИ**. Оно запускает стандартного агента активного worktree и передаёт ему вывод хука, сообщение коммита и список файлов в индексе. Агент получает только запрос на исправление. Он не должен обходить хуки, создавать коммит, отправлять ветку или открывать проверку.
 
-Push
-----
+Отправка ветки
+--------------
 
-**Push** pushes the worktree's branch to `origin`, setting upstream the first time. If the branch is behind, Orca will not silently force-push.
+Кнопка **Отправить** публикует ветку worktree в `origin` и при первом запуске задаёт upstream. Если локальная ветка отстаёт, Orca не выполняет принудительную отправку без предупреждения.
 
-When you've rewritten history (rebase, amend, squash) and the remote only has older copies of your local commits, the Source Control panel surfaces **Force push with lease** as an explicit, separate action — never as a fallback for plain Push. The label shows the commit count being replaced and the upstream branch name so you know exactly what's about to change. Force push uses `--force-with-lease`, so a stale local view of the remote aborts the push instead of clobbering someone else's commits.
+После изменения истории через rebase, amend или squash панель показывает отдельное действие **Принудительно отправить с lease**. Оно не используется как запасной вариант обычной отправки. Подпись указывает число заменяемых коммитов и upstream-ветку. Команда применяет `--force-with-lease`, поэтому при устаревших локальных данных об удалённой ветке отправка завершится ошибкой, а чужие коммиты не будут затёрты.
 
-Open a hosted review
---------------------
+Открытие проверки
+-----------------
 
-After the branch is pushed, use the Source Control panel's hosted review action to create the pull request or merge request. Confirm the base branch, title, description, and draft state before submitting.
+После отправки ветки создайте pull request или merge request через панель управления версиями. Перед подтверждением проверьте базовую ветку, название, описание и статус черновика.
 
-If Orca needs to run a follow-up commit as part of the Create PR flow and that commit fails — hooks reject it, or the working tree has an uncommittable state — the dialog surfaces a detailed failure summary with the hook output and next-step buttons instead of dropping you back into the panel with no context. Use **Fix with AI** from the summary to hand the failure to an agent, or resolve it yourself and rerun.
+Если во время создания pull request Orca должна выполнить дополнительный коммит, но хуки отклоняют его или рабочее дерево находится в неподходящем состоянии, окно показывает подробную ошибку и дальнейшие действия. Передайте её агенту через **Исправить с помощью ИИ** или устраните самостоятельно и повторите попытку.
 
-Use **Generate pull request details with AI** in the create-review dialog when you want Orca to draft the base, title, description, and draft state from the branch diff and commits. Review the fields before creating the review.
+Кнопка **Создать описание pull request с помощью ИИ** заполняет базовую ветку, название, описание и статус черновика по diff и коммитам. Проверьте поля перед созданием.
 
-Per-repo AI action recipes
---------------------------
+Рецепты действий ИИ для репозитория
+-----------------------------------
 
-**Generate with AI**, **Generate pull request details with AI**, **Fix with AI**, and **Resolve with AI** are all Source Control AI actions — each one is backed by an **action recipe** that picks the agent, CLI arguments, and prompt template Orca runs when you trigger the action. Edit them under [Settings → Git & Source Control](/docs/settings) → **Action recipes**, either as your global default or scoped to the current repository.
+Действия **Создать с помощью ИИ**, **Создать описание pull request с помощью ИИ**, **Исправить с помощью ИИ** и **Разрешить с помощью ИИ** используют рецепты. Рецепт задаёт агента, аргументы CLI и шаблон запроса. Их можно менять в разделе [Настройки → Git и управление версиями](/docs/reference/settings) → **Рецепты действий** глобально или для текущего репозитория.
 
-When a repository has its own recipe for an action, saving changes to the global default won't touch it — the settings pane surfaces a **Repository overrides** note listing which repos diverge and what they override (agent, CLI arguments, or command template), with a **Review** link that jumps to that repository's settings so you can update or remove the override.
+Переопределение репозитория не меняется при сохранении глобального рецепта. В настройках отображается список отличающихся репозиториев и переопределённых параметров с кнопкой перехода.
 
-Amend
------
+Изменение последнего коммита
+----------------------------
 
-Amending is explicit — **Commit → Amend**. Orca won't amend commits that have already been pushed unless you confirm.
+Amend запускается явно через **Коммит → Изменить последний коммит**. Для уже отправленного коммита Orca запросит подтверждение.
 
-Source control panel
---------------------
+Панель управления версиями
+---------------------------
 
-The sidebar **Source Control** panel exposes the same actions without leaving your current view: stage and discard files, write a commit message, and run **Commit**, **Push**, **Pull**, or **Sync** as one-click actions. Paths render as UTF-8 even when they contain non-ASCII characters.
+На боковой панели **Управление версиями** доступны те же действия: добавление и отмена изменений, сообщение коммита, **Коммит**, **Отправить**, **Получить** и **Синхронизировать**. Пути отображаются в UTF-8, включая символы вне ASCII.
 
-The panel's primary button at the bottom shifts with state so the next useful action is always one click away: **Stage Files** when there are unstaged changes, then **Commit**, then **Push** / **Pull** / **Sync** depending on how the branch sits against its upstream.
+Основная нижняя кнопка меняется по состоянию: **Добавить файлы**, затем **Коммит**, после чего **Отправить**, **Получить** или **Синхронизировать** в зависимости от отношения ветки к upstream.
 
-When a merge, rebase, cherry-pick, or revert leaves conflicts, Source Control shows **Resolve with AI** next to **Review conflicts** so you can either hand the conflict set to an agent or inspect it yourself before continuing. For an in-progress merge or rebase you no longer want, use **Abort merge** or **Abort rebase** from Source Control.
+При конфликтах merge, rebase, cherry-pick или revert рядом с **Проверить конфликты** появляется **Разрешить с помощью ИИ**. Можно передать конфликт агенту или изучить самостоятельно. Ненужный merge или rebase отменяется действиями **Прервать merge** и **Прервать rebase**.
 
-Next steps
+Что дальше
 ----------
 
-*   [Hosted reviews, issues & Actions](/docs/review/github) — connect the provider that owns the review.
-*   [Annotate AI Diff](/docs/review/annotate-ai-diff) — leave line notes before committing.
+* [Проверки кода, задачи и Actions](/docs/review/github): подключение провайдера проверки.
+* [Комментарии к изменениям ИИ](/docs/review/annotate-ai-diff): построчные замечания до коммита.

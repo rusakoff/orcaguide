@@ -1,46 +1,45 @@
 ---
-title: "Jira items drawer"
-description: "Browse, edit, and link Jira Cloud issues to worktrees the same way you link Linear or GitHub items."
+title: "Панель задач Jira"
+description: "Просмотр, изменение и привязка задач Jira Cloud к worktree."
 source: "https://www.onorca.dev/docs/review/jira"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Jira items drawer](https://www.onorca.dev/docs/review/jira).
 
-Browse, edit, and link Jira Cloud issues to worktrees the same way you link Linear or GitHub items.
+Задачи Jira Cloud можно просматривать, изменять и связывать с worktree так же, как задачи Linear или GitHub.
 
-Jira sits next to GitHub and Linear in the task drawer. Browse Jira Cloud issues, update them, and create a worktree from any issue without leaving Orca.
+Jira находится рядом с GitHub и Linear на панели задач. Работайте с задачами Jira Cloud и создавайте из них worktree, не покидая Orca.
 
-Connect a Jira site
--------------------
+Подключение сайта Jira
+----------------------
 
-1.  Open the **Tasks** sidebar entry and pick **Jira** from the source picker — Jira sits next to GitHub and Linear by default, even before any credentials are saved.
-2.  Click **Connect Jira**. The **Connect Jira site** dialog appears.
-3.  Fill in the three fields:
-    *   **Jira Cloud site URL** — e.g. `https://example.atlassian.net`.
-    *   **Atlassian email** — the address on your Atlassian account.
-    *   **Atlassian API token** — create one at [id.atlassian.com → Security → API tokens](https://id.atlassian.com/manage-profile/security/api-tokens).
-4.  Click **Connect**. Orca verifies the credentials and loads your sites.
+1. Откройте раздел **Задачи** на боковой панели и выберите **Jira**. Этот источник виден рядом с GitHub и Linear ещё до сохранения учётных данных.
+2. Нажмите **Подключить Jira**. Откроется окно подключения сайта.
+3. Заполните три поля:
+   * **URL сайта Jira Cloud**, например `https://example.atlassian.net`;
+   * **электронная почта Atlassian**;
+   * **токен Atlassian API**, который создаётся в разделе [id.atlassian.com → Security → API tokens](https://id.atlassian.com/manage-profile/security/api-tokens).
+4. Нажмите **Подключить**. Orca проверит данные и загрузит доступные сайты.
 
-You can connect more than one Atlassian site. The Tasks header has a site picker once a site is connected; choose **All sites** to combine issues across them.
+Можно подключить несколько сайтов Atlassian. После подключения в заголовке задач появится переключатель сайтов, а вариант **Все сайты** объединит задачи.
 
-If you don't use Jira at all, hide it from the source picker via [Settings → Tasks](/docs/settings).
+Если Jira не используется, скройте её в списке источников через [Настройки → Задачи](/docs/reference/settings).
 
-Using Jira
+Работа с Jira
+-------------
+
+* После включения источников панель показывает задачи GitHub, Linear и Jira в общем списке.
+* Откройте задачу, чтобы увидеть описание, комментарии и метаданные. Состояние через доступные переходы, приоритет, исполнитель и пользовательские поля редактируются на месте.
+* Комментарий можно добавить через форму в карточке.
+* При создании worktree из задачи Jira название заполняется автоматически, а задача остаётся связанной с worktree и последующей проверкой.
+* Для каждого репозитория Orca запоминает последний источник задач.
+
+Где хранится токен
+
+Токен Atlassian API шифруется через связку ключей операционной системы и хранится локально. Он используется только для запросов к настроенному сайту Jira. Если Orca больше не нужна, отзовите токен в настройках Atlassian.
+
+Что дальше
 ----------
 
-*   The task drawer shows GitHub, Linear, and Jira issues in a unified list once each source is enabled.
-*   Open an issue to see the full description, comments, and metadata in a side drawer. Edit status (via available transitions), priority, assignee, and custom fields inline.
-*   Add a comment from the drawer's comment composer.
-*   Creating a worktree from a Jira issue pre-fills the task name and links the worktree to the issue, so the review and the issue stay tied together.
-*   Orca remembers your last-used task source per repo, so a Jira-driven repo defaults to Jira on next open.
-
-Where the token lives
-
-Your Atlassian API token is encrypted via the OS keychain and stored locally — it's only used to call your configured Jira site. Revoke it from Atlassian account settings if you stop using Orca.
-
-Next steps
-----------
-
-*   [Linear items drawer](/docs/review/linear) — same flow against Linear.
-*   [Hosted reviews, issues & Actions](/docs/review/github) — hand off the worktree to a hosted review once the Jira issue is in progress.
-*   [Commit & push from Orca](/docs/review/commit-push) — ship the branch without leaving Orca.
+* [Панель задач Linear](/docs/review/linear): тот же процесс для Linear.
+* [Проверки кода, задачи и Actions](/docs/review/github): отправка worktree на проверку после начала работы над задачей Jira.
+* [Коммит и отправка из Orca](/docs/review/commit-push): отправка ветки без выхода из приложения.

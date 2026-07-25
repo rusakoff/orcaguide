@@ -1,34 +1,33 @@
 ---
-title: "Linear items drawer"
-description: "Linear items drawer"
+title: "Панель задач Linear"
+description: "Просмотр, создание, изменение и привязка задач Linear к worktree."
 source: "https://www.onorca.dev/docs/review/linear"
 ---
 
-> **Статус перевода:** исходник. Первоисточник: [Orca Docs / Linear items drawer](https://www.onorca.dev/docs/review/linear).
 
-Linear sits next to hosted review providers in the task drawer. Browse, create, update, and link Linear issues to worktrees the same way you link GitHub issues.
+Linear находится рядом с провайдерами проверки кода на панели задач. Задачи Linear можно просматривать, создавать, изменять и связывать с worktree так же, как задачи GitHub.
 
-Setup
------
+Настройка
+---------
 
-1.  Open [Settings → Integrations → Linear](/docs/settings).
-2.  Paste a personal API token from [Linear → Settings → API](https://linear.app/settings/api).
-3.  Pick the team(s) you want to see.
+1. Откройте [Настройки → Интеграции → Linear](/docs/reference/settings).
+2. Вставьте личный токен API из раздела [Linear → Settings → API](https://linear.app/settings/api).
+3. Выберите нужные команды.
 
-Using Linear
-------------
+Работа с Linear
+---------------
 
-*   The task drawer shows GitHub and Linear issues in one combined view.
-*   Creating a worktree from a Linear issue pre-fills the name and attaches the issue ID.
-*   Open an issue detail view to update fields such as status, assignee, priority, labels, and estimate. Priority renders with Linear's own priority icons so the drawer matches what you see in Linear itself.
-*   When you launch an agent from a Linear issue, Orca includes any inline images and media embedded in the issue's description, comments, and sub-issues in the prompt context, so the agent can see the mock-up or bug repro without you having to paste screenshots by hand.
-*   Long lists paginate with a **Load more** action — useful when a project has more issues than fit in the initial drawer.
-*   Orca remembers your last-used task source (GitHub, Linear, or Jira) per repo.
+* Панель задач показывает задачи GitHub и Linear в одном списке.
+* При создании worktree из задачи Linear название заполняется автоматически, а идентификатор задачи привязывается к worktree.
+* В карточке задачи можно менять состояние, исполнителя, приоритет, метки и оценку. Приоритет отображается значками Linear.
+* При запуске агента из задачи Linear Orca добавляет в контекст встроенные изображения и другие материалы из описания, комментариев и подзадач. Агент видит макет или воспроизведение ошибки без ручного копирования снимков.
+* В длинных списках доступна кнопка **Загрузить ещё**.
+* Orca запоминает последний источник задач для каждого репозитория: GitHub, Linear или Jira.
 
-Linear status sync (moving an issue to "In Progress" when a worktree is created) is opt-in per team.
+Синхронизация состояния Linear, например перевод задачи в "В работе" при создании worktree, включается отдельно для каждой команды.
 
-Next steps
+Что дальше
 ----------
 
-*   [Hosted reviews, issues & Actions](/docs/review/github) — connect code review state to the worktree after the task is in progress.
-*   [Commit & push from Orca](/docs/review/commit-push) — ship the branch without leaving Orca.
+* [Проверки кода, задачи и Actions](/docs/review/github): связь состояния проверки с worktree.
+* [Коммит и отправка из Orca](/docs/review/commit-push): отправка ветки без выхода из Orca.
