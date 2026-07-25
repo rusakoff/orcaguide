@@ -6,6 +6,9 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: appName,
     },
+    themeSwitch: {
+      enabled: false,
+    },
     links: [
       {
         text: 'Оригинальная документация',

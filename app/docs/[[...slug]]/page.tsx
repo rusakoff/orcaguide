@@ -7,11 +7,21 @@ import {
   MarkdownCopyButton,
   ViewOptionsPopover,
 } from 'fumadocs-ui/layouts/docs/page';
+import { CalendarDays, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
+import { StructuredData } from '@/components/structured-data';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { gitConfig } from '@/lib/shared';
+import {
+  getArticleJsonLd,
+  getBreadcrumbJsonLd,
+  getOfficialSourceUrl,
+  getRelatedPages,
+  organizationJsonLd,
+} from '@/lib/seo';
+import { editorialName, editorialUrl, gitConfig, siteUrl } from '@/lib/shared';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -20,11 +30,45 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
 
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
+  const sourceUrl = getOfficialSourceUrl(page);
+  const relatedPages = getRelatedPages(page);
+  const dateModified = page.data.lastModified;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
+      <StructuredData
+        data={[
+          organizationJsonLd,
+          getArticleJsonLd(page),
+          getBreadcrumbJsonLd(page),
+        ]}
+      />
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
+      <div className="article-meta" aria-label="Сведения о материале">
+        <span>
+          Редактор:{' '}
+          <Link href={editorialUrl.replace(siteUrl, '')}>{editorialName}</Link>
+        </span>
+        {dateModified ? (
+          <span>
+            <CalendarDays aria-hidden="true" size={15} />
+            Обновлено{' '}
+            <time dateTime={dateModified.toISOString()}>
+              {new Intl.DateTimeFormat('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              }).format(dateModified)}
+            </time>
+          </span>
+        ) : null}
+        {sourceUrl ? (
+          <a href={sourceUrl} rel="external">
+            Официальный источник <ExternalLink aria-hidden="true" size={14} />
+          </a>
+        ) : null}
+      </div>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
         <MarkdownCopyButton markdownUrl={markdownUrl} />
         <ViewOptionsPopover
@@ -39,6 +83,19 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
             a: createRelativeLink(source, page),
           })}
         />
+        <section className="related-pages" aria-labelledby="related-pages-title">
+          <h2 id="related-pages-title">Связанные материалы</h2>
+          <ul>
+            {relatedPages.map((relatedPage) => (
+              <li key={relatedPage.url}>
+                <Link href={relatedPage.url}>{relatedPage.data.title}</Link>
+                {relatedPage.data.description ? (
+                  <p>{relatedPage.data.description}</p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </section>
       </DocsBody>
     </DocsPage>
   );
@@ -60,10 +117,17 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
       canonical: page.url,
     },
     openGraph: {
+      type: 'article',
       title: page.data.title,
       description: page.data.description,
       url: page.url,
       images: getPageImageUrl(page).url,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: page.data.title,
+      description: page.data.description,
+      images: [getPageImageUrl(page).url],
     },
   };
 }

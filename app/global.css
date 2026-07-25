@@ -3,6 +3,7 @@
 @import 'fumadocs-ui/css/preset.css';
 
 :root {
+  color-scheme: dark;
   --fd-background: #101110;
   --fd-foreground: #f2f0e8;
   --fd-muted: #a7a59d;
